@@ -1,0 +1,15 @@
+{
+  "name": "comp3005_project",
+  "version": "1.0.0",
+  "description": "This is a postgresql server using javascript and express",
+  "main": "book_store.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Amrhe Minott",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^8.0.0"
+  }
+}
