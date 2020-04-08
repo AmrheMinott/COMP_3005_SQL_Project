@@ -30,8 +30,8 @@ Documents to find in Project
 
 Main Directory
 
-  here
-  
+  This is the main file you are going to download from my Github account
+
     index.html - main entry point to project when server is run from the terminal and calling http://localhost:3000/
 
     book_store.js - this .js file that handles functionality of index.html
