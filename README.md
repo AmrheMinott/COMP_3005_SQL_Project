@@ -25,7 +25,6 @@ How to Run Project in Four (4) Steps
     Step 4: open browser and type http://localhost:3000/
 
 
-
 Documents to find in Project
 
 Main Directory
@@ -42,7 +41,6 @@ Main Directory
 
     package.json - this file is Node.js way of presenting my work as the owner and creator of the project to you the user along with the needed dependencies
 
-    DDL_for_BookStore_Constriants.txt - this text file has all the need code to create the tables needed to create database on the pg4Admin
 
     node_modules (folder)
       here is where you can find all the needed modules to run the project using the node.js aspect of the project
@@ -66,8 +64,11 @@ Main Directory
     Database_Designs (folder)
       this folder has a pdf of Functional Dependencies, E-R diagrams, Database Schema and Steps involved in process creating diagrams
 
+    Text_Files (folder)
+      DDL_for_BookStore_Constriants.txt - this text file has all the need code to create the tables needed to create database on the pg4Admin
 
-
+      template_Insertions_Values - this test file has template values that can be inserted to the pg4Admin/sql server for testing  
+       
 
 
 

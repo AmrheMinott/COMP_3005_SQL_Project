@@ -92,7 +92,6 @@ async function insertUser(req , res){
     res.send(JSON.stringify(result));
   }
 
-
 }
 
 
@@ -153,8 +152,7 @@ async function insertBook(req , res){
 
     insertBookQuery = insertBookQuery.concat(")");
 
-    // we are connecting the server
-    // execute the query
+    // execute the query that we typed in variable
     await client.query(insertBookQuery);
     result.success = true
 
@@ -242,12 +240,12 @@ async function getBooks(req, res){
 
 
 
-app.post("/getBooks", addToBookStore);
-async function addToBookStore(){
+app.post("/addToCart", addToBookStoreCart);
+async function addToBookStoreCart(){
 
   // we got the isbn of the book to add to the Book Store
   let isbn = req.body.isbn
-  console.log("addToBookStore: isbn -> " + isbn);
+  console.log("addToBookStoreCart: isbn -> " + isbn);
 
   let result = {}
   // make a query to add to the Book Store using the credentials of the user on the server
@@ -310,7 +308,7 @@ async function theUserId(req , res){
 
 
 
-app.listen(3000);
+app.listen(3000 , () => console.log("Server is listening on port 3000 of localhost"))
 
 
 
