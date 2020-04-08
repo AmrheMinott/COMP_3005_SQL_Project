@@ -12,7 +12,7 @@ async function connectToDB(){
     return false
   }
 
-  if (server_uIDs != NULL){
+  if (server_uIDs.length > 1 || server_uIDs != undefined){
     return true
   } else {
     return false
