@@ -9,6 +9,9 @@ async function getBooks(){
     var result  = await fetch("http://localhost:3000/getBooks" , {method:"GET"});
     let books   = await result.json();
 
+    console.log("books from server: ");
+    console.log(books);
+
     let div       = document.getElementById("booksDiv");
     div.innerHTML = "" // we clear the innerHTML before adding anything
 
@@ -16,13 +19,17 @@ async function getBooks(){
     for (b of books) {
       var breakLine = document.createElement("br");
       var book      = document.createElement("input");
+      var bookLabel = document.createElement("label");
 
+      var innerHTML = "Title " + b.title + " Author " + b.author + " ISBN "+ b.isbn;
       book.setAttribute("type" , "checkBox");
       book.setAttribute("id" , b.isbn);
       book.setAttribute("onchange", "addToCart(this.checked , this.id)");
+      bookLabel.innerHTML = innerHTML
 
       isbn = b.isbn
       div.appendChild(book);
+      div.appendChild(bookLabel);
       div.appendChild(breakLine)
     }
 
@@ -37,6 +44,9 @@ async function getBooks(){
 
 async function addToCart(checked , isbn){
 
+  console.log("addToCart: " + checked + " and isbn = " + isbn);
+
+  /*
   let result = await fetch("http://localhost:3000/getBooks",
   {
     method:"POST",
@@ -45,6 +55,7 @@ async function addToCart(checked , isbn){
     },
     body:JSON.stringify({isbn:isbn})
   })
+  */
 
 
 }

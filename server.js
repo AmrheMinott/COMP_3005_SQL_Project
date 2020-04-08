@@ -19,17 +19,22 @@ let connected;
 
 let official_uid;
 
+async function connectAndStart(){
+  await client.connect();
+}
+connectAndStart();
+
 app.get("/getUIDs", connectToDB);
 async function connectToDB(req, res){
   let result = {}
 
   try {
     console.log("connectToDB");
-    await client.connect();
+    // await client.connect();
     const qResult = await client.query("select u_id from users");
     server_uIDs = qResult.rows;
     console.log(server_uIDs);
-    await client.end();
+    // await client.end();
 
     res.setHeader("content-type" , "application/json");
     res.status(200).send(JSON.stringify(qResult.rows));
@@ -73,9 +78,9 @@ async function insertUser(req , res){
 
     insertUserQuery = insertUserQuery.concat(")");
 
-    await client.connect();
+    // await client.connect();
     await client.query(insertUserQuery);
-    await client.end();
+    // await client.end();
     result.success = true
     user = req.body
 
@@ -103,6 +108,7 @@ async function insertBook(req , res){
   let result = {}
   try {
 
+    // we are making the query string
     var insertBookQuery = "insert into users(author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name) values(";
 
     insertBookQuery = insertBookQuery.concat("'");
@@ -144,17 +150,26 @@ async function insertBook(req , res){
 
     insertBookQuery = insertBookQuery.concat(")");
 
-    await client.connect();
+    // we are connecting the server
+    // await client.connect();
+    // execute the query
     await client.query(insertBookQuery);
-    await client.end();
+    // await client.end();
     result.success = true
 
+    console.log("insertBook: Connection to server: SUCCESS");
+
   } catch (e){
+
+    console.log("insertBook: Connection to server: NO SUCCESS");
     result.success = false
 
   } finally {
+
+    console.log("insertBook: Connection to server: Sending");
     res.setHeader("content-type" , "application/json");
     res.send(JSON.stringify(result));
+
   }
 
 
@@ -173,9 +188,9 @@ async function removeBook(req, res){
     // this query deletes from the server
     let deleteQuery = "delete from books where isbn ="
     deleteQuery = deleteQuery.concat(req.body.remove);
-    await client.connect();
+    // await client.connect();
     await client.query(deleteQuery);
-    await client.end();
+    // await client.end();
 
     result.success = true
 
@@ -199,18 +214,20 @@ app.get("/getBooks", getBooks);
 async function getBooks(req, res){
 
   try {
-    await client.connect();
+
+    // connecting to server to execute query
+    // await client.connect();
     let getBooksResult = await client.query("select * from books");
     let books = getBooksResult.rows;
-    await client.end();
+    // await client.end();
 
-    console.log("getBooks: We have gotten the books" + books);
+    console.log("getBooks GET: We have gotten the books" + books);
 
     res.setHeader("content-type" , "application/json");
     res.status(200).send(JSON.stringify(books));
 
   } catch (e){
-    console.error("getBooks: Cound not connect");
+    console.error("getBooks GET: Cound not connect");
   }
 
 }
@@ -222,13 +239,15 @@ async function getBooks(req, res){
 app.post("/getBooks", addToBookStore);
 async function addToBookStore(){
 
+  // we got the isbn of the book to add to the Book Store
   let isbn = req.body.isbn
+  console.log("addToBookStore: isbn -> " + isbn);
 
   let result = {}
-  // make a query to add to the Book Store using the credetials of the user on the server
+  // make a query to add to the Book Store using the credentials of the user on the server
   try {
 
-    var addToCartQuery = "insert into bookstore(bill_info, ship_info, order_num, ISBN, u_id) values(";
+    var addToCartQuery = "insert into bookstore(bill_info, ship_info, order_num, isbn, u_id) values(";
 
     addToCartQuery = addToCartQuery.concat("'");
     addToCartQuery = addToCartQuery.concat(user.bill_info);
@@ -250,13 +269,15 @@ async function addToBookStore(){
 
     addToCartQuery = addToCartQuery.concat(")");
 
-    await client.connect();
+    // await client.connect();
     await client.query(addToCartQuery);
-    await client.end();
+    // await client.end();
     result.success = true
 
     res.setHeader("content-type" , "application/json");
     res.send(JSON.stringify(result));
+
+    console.log("addToBookStore POST: connected to server");
 
   } catch (e){
 
@@ -265,6 +286,7 @@ async function addToBookStore(){
   } finally {
     res.setHeader("content-type" , "application/json");
     res.send(JSON.stringify(result));
+    console.log("addToBookStore POST: NOT connected to server");
   }
 
 }
