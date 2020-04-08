@@ -17,6 +17,8 @@ let server_uIDs;
 let user;
 let connected;
 
+let official_uid;
+
 app.get("/getUIDs", connectToDB);
 async function connectToDB(req, res){
   let result = {}
@@ -37,7 +39,7 @@ async function connectToDB(req, res){
     console.log("We are logged in");
 
   } catch (e){
-    console.error("Cound not connect");
+    console.error("getUIDs: Cound not connect");
     connected = false
     result.success = false
   }
@@ -101,7 +103,7 @@ async function insertBook(req , res){
   let result = {}
   try {
 
-    var insertBookQuery = "insert into user(author, genre, pub_id, num_of_pages, price, ISBN, title, percent, pub_name) values(";
+    var insertBookQuery = "insert into users(author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name) values(";
 
     insertBookQuery = insertBookQuery.concat("'");
     insertBookQuery = insertBookQuery.concat(req.body.author);
@@ -133,6 +135,10 @@ async function insertBook(req , res){
 
     insertBookQuery = insertBookQuery.concat("'");
     insertBookQuery = insertBookQuery.concat(req.body.pub_name);
+    insertBookQuery = insertBookQuery.concat("',");
+
+    insertBookQuery = insertBookQuery.concat("'");
+    insertBookQuery = insertBookQuery.concat(req.body.quantity);
     insertBookQuery = insertBookQuery.concat("'");
 
 
@@ -165,7 +171,7 @@ async function removeBook(req, res){
   try {
 
     // this query deletes from the server
-    let deleteQuery = "delete from book where isbn ="
+    let deleteQuery = "delete from books where isbn ="
     deleteQuery = deleteQuery.concat(req.body.remove);
     await client.connect();
     await client.query(deleteQuery);
@@ -194,15 +200,17 @@ async function getBooks(req, res){
 
   try {
     await client.connect();
-    let getBooksResult = await client.query("select * from book");
+    let getBooksResult = await client.query("select * from books");
     let books = getBooksResult.rows;
     await client.end();
+
+    console.log("getBooks: We have gotten the books" + books);
 
     res.setHeader("content-type" , "application/json");
     res.status(200).send(JSON.stringify(books));
 
   } catch (e){
-    console.error("Cound not connect");
+    console.error("getBooks: Cound not connect");
   }
 
 }
@@ -236,6 +244,7 @@ async function addToBookStore(){
 
     addToCartQuery = addToCartQuery.concat("'");
     addToCartQuery = addToCartQuery.concat(user.u_id);
+    // addToCartQuery = addToCartQuery.concat(official_uid);
     addToCartQuery = addToCartQuery.concat("'");
 
 
@@ -259,8 +268,12 @@ async function addToBookStore(){
 
 
 app.post("/userId" , theUserId);
-function theUserId(req , res){
-  u_id = req.body.u_id
+async function theUserId(req , res){
+  let result = {}
+  official_uid = req.body.u_id
+  result.success = true
+  console.log("U_ID on server-side in post function theUserId is " + official_uid);
+  res.send(JSON.stringify(result));
 }
 
 

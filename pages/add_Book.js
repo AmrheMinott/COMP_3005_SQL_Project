@@ -13,6 +13,7 @@ async function addBook(){
   let title = document.getElementById("title").value;
   let percent = document.getElementById("percent").value;
   let pub_name = document.getElementById("pub_name").value;
+  let quantity = document.getElementById("quantity").value;
 
   body.author = author;
   body.genre = genre;
@@ -22,8 +23,17 @@ async function addBook(){
   body.title = title;
   body.percent = percent;
   body.pub_name = pub_name;
+  body.quantity = quantity;
 
   let success = await fetch ("http://localhost:3000/addBook", {method:"POST", headers:{"content-type":"application/json"}, body:JSON.stringify(body)})
+
+  console.log("Success of books addition was a " + success.success);
+
+  if (success.success){
+    alert("Book was added nicely")
+  } else {
+    alert("There appears to be an issue")
+  }
 
   return success.success
 
