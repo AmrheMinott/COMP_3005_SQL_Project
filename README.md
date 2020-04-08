@@ -18,6 +18,7 @@ This project makes use of the following programming languages
 
 
 How to Run Project in Four (4) Steps
+
     Step 1: open terminal or command line
     Step 2: navigate to folder with server.js
     Step 3: execute in terminal node server.js
