@@ -1,6 +1,7 @@
 const {Client}  = require("pg")
 const express   = require("express")
 const app       = express()
+const util = require("util")
 
 app.use(express.json())
 app.use(express.static("."))
@@ -19,10 +20,13 @@ let connected;
 
 let official_uid;
 
+
+// this is where we go an connect to the postgresql server
+connectAndStart();
 async function connectAndStart(){
   await client.connect();
 }
-connectAndStart();
+
 
 app.get("/getUIDs", connectToDB);
 async function connectToDB(req, res){
@@ -30,18 +34,16 @@ async function connectToDB(req, res){
 
   try {
     console.log("connectToDB");
-    // await client.connect();
     const qResult = await client.query("select u_id from users");
     server_uIDs = qResult.rows;
     console.log(server_uIDs);
-    // await client.end();
 
     res.setHeader("content-type" , "application/json");
     res.status(200).send(JSON.stringify(qResult.rows));
 
     connected = true
     result.success = true
-    console.log("We are logged in");
+    console.log("We got logged in");
 
   } catch (e){
     console.error("getUIDs: Cound not connect");
@@ -62,6 +64,7 @@ async function insertUser(req , res){
   let result = {}
   try {
 
+    // string that is used to add user to database
     var insertUserQuery = "insert into users(u_id, bill_info, ship_info) values(";
 
     insertUserQuery = insertUserQuery.concat("'");
@@ -78,9 +81,7 @@ async function insertUser(req , res){
 
     insertUserQuery = insertUserQuery.concat(")");
 
-    // await client.connect();
     await client.query(insertUserQuery);
-    // await client.end();
     result.success = true
     user = req.body
 
@@ -101,16 +102,15 @@ async function insertUser(req , res){
 
 
 // the Boss does all of this
-
 app.post("/addBook" , insertBook);
 async function insertBook(req , res){
 
   let result = {}
   try {
 
-    // we are making the query string
-    var insertBookQuery = "insert into users(author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name) values(";
-
+    // we are making the query string so we can add the book from the "boss"
+    var insertBookQuery = "insert into books (author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name, quantity) values(";
+    console.log(req.body);
     insertBookQuery = insertBookQuery.concat("'");
     insertBookQuery = insertBookQuery.concat(req.body.author);
     insertBookQuery = insertBookQuery.concat("',");
@@ -132,11 +132,15 @@ async function insertBook(req , res){
     insertBookQuery = insertBookQuery.concat("',");
 
     insertBookQuery = insertBookQuery.concat("'");
+    insertBookQuery = insertBookQuery.concat(req.body.isbn);
+    insertBookQuery = insertBookQuery.concat("',");
+
+    insertBookQuery = insertBookQuery.concat("'");
     insertBookQuery = insertBookQuery.concat(req.body.title);
     insertBookQuery = insertBookQuery.concat("',");
 
     insertBookQuery = insertBookQuery.concat("'");
-    insertBookQuery = insertBookQuery.concat(req.body.precent);
+    insertBookQuery = insertBookQuery.concat(req.body.percent);
     insertBookQuery = insertBookQuery.concat("',");
 
     insertBookQuery = insertBookQuery.concat("'");
@@ -151,10 +155,8 @@ async function insertBook(req , res){
     insertBookQuery = insertBookQuery.concat(")");
 
     // we are connecting the server
-    // await client.connect();
     // execute the query
     await client.query(insertBookQuery);
-    // await client.end();
     result.success = true
 
     console.log("insertBook: Connection to server: SUCCESS");
@@ -185,20 +187,27 @@ async function removeBook(req, res){
 
   try {
 
-    // this query deletes from the server
-    let deleteQuery = "delete from books where isbn ="
+
+    // this query deletes from the server a book with a specific ISBN
+    let deleteQuery = "delete from books where isbn = '"
     deleteQuery = deleteQuery.concat(req.body.remove);
-    // await client.connect();
+    deleteQuery = deleteQuery.concat("'");
+
+    // excutes the query
     await client.query(deleteQuery);
-    // await client.end();
 
     result.success = true
+
+    console.log("removeBook: removing book was a success");
 
   } catch (e){
 
     result.success = false
+    console.log("removeBook: removing book didn't work");
 
   } finally {
+
+    console.log("removeBook: sending status to user");
     res.setHeader("content-type" , "application/json");
     res.send(JSON.stringify(result));
   }
@@ -216,10 +225,8 @@ async function getBooks(req, res){
   try {
 
     // connecting to server to execute query
-    // await client.connect();
     let getBooksResult = await client.query("select * from books");
     let books = getBooksResult.rows;
-    // await client.end();
 
     console.log("getBooks GET: We have gotten the books" + books);
 
@@ -269,9 +276,8 @@ async function addToBookStore(){
 
     addToCartQuery = addToCartQuery.concat(")");
 
-    // await client.connect();
     await client.query(addToCartQuery);
-    // await client.end();
+
     result.success = true
 
     res.setHeader("content-type" , "application/json");

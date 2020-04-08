@@ -32,17 +32,27 @@ let bill_infoTextBox  = document.getElementById("bill_info");
 
 async function doesSignUpValuesMeetRequirements(){
 
+  var present = true
+
   // connect to database and get the u_id's to check
   if (connectToDB() && Array.isArray(server_uIDs)){
 
-    if (server_uIDs.includes(u_idTextBox.value)){
+    for (id of server_uIDs){
+      if (u_idTextBox.value === id.u_id){
+        present = false
+        console.log("In for loop checking to see if user already exist u_idTextBox.value " + u_idTextBox.value + " && u_id " + id.u_id);
+      }
+    }
+
+    if (present == false){
       alert("User Id is already taken try something else!");
-    } else if (ship_infoTextBox.value.length != CHARACTERAMT && bill_infoTextBox.value.length != CHARACTERAMT){
-      alert("Both Shipping Information and Billing Inforamtion is not at the needed Number of Charcters \n\n ");
-    } else if (ship_infoTextBox.value.length != CHARACTERAMT){
-      alert("The number of characters you have for the shipping info is too small. \n\nOur requirement is 8 characters");
-    } else if (bill_infoTextBox.value.length != CHARACTERAMT){
-      alert("The number of characters you have for the shipping info is too small. \n\nOur requirement is 8 characters");
+      return;
+    }
+
+    if (ship_infoTextBox.value.length != CHARACTERAMT || bill_infoTextBox.value.length != CHARACTERAMT){
+      alert("Please check Shipping Information and Billing Inforamtion as one of them have not met the needed Number of Charcters \n\n ");
+    } else if (u_idTextBox.value.length != CHARACTERAMT){
+      alert("User Id has not met the number of characters needed!");
     } else {
       alert("Credentials have met our requirements");
 
@@ -56,7 +66,7 @@ async function doesSignUpValuesMeetRequirements(){
     }
 
   } else {
-    alert("Since connection to the server failed we can not connect!");
+    alert("There is an issue with connecting to the server, so we can not sign you up ATM!");
   }
 
 }
