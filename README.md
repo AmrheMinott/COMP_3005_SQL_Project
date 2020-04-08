@@ -19,6 +19,7 @@ This project makes use of the following programming languages
 Documents to find in Project
 
 Main Directory
+
   here
     index.html - main entry point to project when server is run from the terminal and calling http://localhost:3000/
 
