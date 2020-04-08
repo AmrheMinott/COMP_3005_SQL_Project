@@ -1,6 +1,5 @@
- 
+
 create table users(
-  username     varchar(8),
   u_id         varchar(8),
   bill_info    varchar(8),
 	ship_info    varchar(8),
@@ -10,7 +9,7 @@ create table users(
 );
 
 
-create table publisher(
+create table publishers(
   name        varchar(15),
 	address	    varchar(8),
   phone_num   varchar(8),
@@ -22,7 +21,7 @@ create table publisher(
 );
 
 
-create table book(
+create table books(
   author         varchar(15),
 	genre		       varchar(8),
   pub_id		     varchar(8),
@@ -35,7 +34,7 @@ create table book(
 	quantity       numeric(4,0),
 
 	primary key (isbn),
-  foreign key (pub_id) references publisher (pub_id)
+  foreign key (pub_id) references publishers (pub_id)
     on delete cascade
 
 );
@@ -55,7 +54,7 @@ create table bookstore(
     on delete cascade,
 	foreign key (u_id) references users
     on delete cascade,
-  foreign key (isbn) references book (isbn)
+  foreign key (isbn) references books (isbn)
     on delete cascade
 
 );
@@ -71,7 +70,3 @@ create table warehouse(
     on delete cascade
 
 );
-
-
-
-

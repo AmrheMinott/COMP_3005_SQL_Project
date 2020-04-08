@@ -17,12 +17,6 @@ let server_uIDs;
 let user;
 let connected;
 
-// client.connect()
-// .then(()    => console.log("connectToDB"))
-// .catch(e    => console.log())
-// .finally(() => client.end())
-
-
 app.get("/getUIDs", connectToDB);
 async function connectToDB(req, res){
   let result = {}
