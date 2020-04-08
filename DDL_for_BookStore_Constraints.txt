@@ -1,20 +1,19 @@
 
 create table users(
-  u_id         varchar(8),
-  bill_info    varchar(8),
-	ship_info    varchar(8),
+	u_id		varchar(8),
+	bill_info	varchar(8),
+	ship_info	varchar(8),
 
 	primary key (u_id)
-
 );
 
 
 create table publishers(
-  name        varchar(15),
-	address	    varchar(8),
-  phone_num   varchar(8),
-  bank_acc    numeric(8),
-  pub_id      varchar(8),
+  	name		varchar(15),
+	address		varchar(8),
+  	phone_num	varchar(8),
+  	bank_acc	numeric(8),
+  	pub_id		varchar(8),
 
 	primary key (pub_id)
 
@@ -22,51 +21,52 @@ create table publishers(
 
 
 create table books(
-  author         varchar(15),
-	genre		       varchar(8),
-  pub_id		     varchar(8),
-  num_of_pages	 numeric(4,0) check (num_of_pages > 0),
-  price          numeric(4,0) check (price > 0),
-  ISBN		       varchar(8),
-  title		       varchar(8),
-  percent		     numeric(4,0) check (percent > 0),
-  pub_name		   varchar(8),
-	quantity       numeric(4,0),
+  	author		varchar(15),
+	genre		varchar(8),
+  	pub_id		varchar(8),
+  	num_of_pages	numeric(4,0) check (num_of_pages > 0),
+  	price		numeric(4,0) check (price > 0),
+  	isbn		varchar(8),
+  	title		varchar(8),
+  	percent		numeric(4,0) check (percent > 0),
+  	pub_name	varchar(8),
+	quantity	numeric(4,0),
 
 	primary key (isbn),
-  foreign key (pub_id) references publishers (pub_id)
-    on delete cascade
+	foreign key (pub_id) references publishers (pub_id)
+		on delete cascade
 
 );
 
 
 create table bookstore(
-  bill_info    varchar(8),
-	ship_info    varchar(8),
-  order_num    varchar(8),
-  isbn         varchar(8),
-  u_id         varchar(8),
+  	bill_info	varchar(8),
+	ship_info	varchar(8),
+  	order_num	varchar(8),
+  	isbn		varchar(8),
+  	u_id		varchar(8),
 
 	primary key (order_num, bill_info, ship_info),
-  foreign key (bill_info) references users
-    on delete cascade,
+	
+	foreign key (bill_info) references users
+		on delete cascade,
 	foreign key (ship_info) references users
-    on delete cascade,
+		on delete cascade,
 	foreign key (u_id) references users
-    on delete cascade,
-  foreign key (isbn) references books (isbn)
-    on delete cascade
+		on delete cascade,
+
+	foreign key (isbn) references books (isbn)
+		on delete cascade
 
 );
 
 create table warehouse(
-  bill_info         varchar(8),
-	ship_info         varchar(8),
-  order_num         varchar(8),
-  tracking_info     varchar(8),
+	bill_info	varchar(8),
+	ship_info	varchar(8),
+	order_num	varchar(8),
+	tracking_info	serial primary key,
 
-	primary key (tracking_info),
-  foreign key (order_num, bill_info, ship_info) references bookstore
-    on delete cascade
+w		foreign key (order_num, bill_info, ship_info) references bookstore
+		on delete cascade
 
 );
