@@ -255,6 +255,9 @@ async function addToBookStore(){
     await client.end();
     result.success = true
 
+    res.setHeader("content-type" , "application/json");
+    res.send(JSON.stringify(result));
+
   } catch (e){
 
     result.success = false
@@ -273,6 +276,7 @@ async function theUserId(req , res){
   official_uid = req.body.u_id
   result.success = true
   console.log("U_ID on server-side in post function theUserId is " + official_uid);
+
   res.send(JSON.stringify(result));
 }
 
