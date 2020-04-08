@@ -10,7 +10,7 @@ create table users(
 
 create table publishers(
   	name		varchar(15),
-	address		varchar(8),
+		address		varchar(8),
   	phone_num	varchar(8),
   	bank_acc	numeric(8),
   	pub_id		varchar(8),
@@ -47,7 +47,7 @@ create table bookstore(
   	u_id		varchar(8),
 
 	primary key (order_num, bill_info, ship_info),
-	
+
 	foreign key (bill_info) references users
 		on delete cascade,
 	foreign key (ship_info) references users
@@ -66,7 +66,7 @@ create table warehouse(
 	order_num	varchar(8),
 	tracking_info	serial primary key,
 
-w		foreign key (order_num, bill_info, ship_info) references bookstore
+	foreign key (order_num, bill_info, ship_info) references bookstore
 		on delete cascade
 
 );

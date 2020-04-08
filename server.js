@@ -51,7 +51,6 @@ async function connectToDB(req, res){
     result.success = false
   }
   /*finally {
-    await client.end();
     res.setHeader("content-type" , "application/json");
     res.status(200).send(JSON.stringify(result));
   }*/
