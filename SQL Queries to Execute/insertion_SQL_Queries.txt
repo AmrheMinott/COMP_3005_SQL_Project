@@ -1,90 +1,90 @@
 insert into users (u_id, bill_info, ship_info)
-values ('12345679', 'bill_info_1', 'ship_info_1')
+values ('12345679', 'bill_info_1', 'ship_info_1');
 
 insert into users (u_id, bill_info, ship_info)
-values ('12345678', 'bill_info_2', 'ship_info_2')
+values ('12345678', 'bill_info_2', 'ship_info_2');
 
 insert into users (u_id, bill_info, ship_info)
-values ('12345677', 'bill_info_3', 'ship_info_3')
+values ('12345677', 'bill_info_3', 'ship_info_3');
 
 insert into users (u_id, bill_info, ship_info)
-values ('12345676', 'bill_info_4', 'ship_info_4')
+values ('12345676', 'bill_info_4', 'ship_info_4');
 
 insert into users (u_id, bill_info, ship_info)
-values ('12345675', 'bill_info_5', 'ship_info_5')
+values ('12345675', 'bill_info_5', 'ship_info_5');
 
 
 
 
 insert into publishers (name, address, phone_num, bank_acc, pub_id)
-values('GOD', '123 Heaven Street', '5551234777777', '11111', '77777777')
+values('GOD', '123 Heaven Street', '5551234777777', '11111', '77777777');
 
 insert into publishers (name, address, phone_num, bank_acc, pub_id)
-values('NY Times', 'Holly Wood', '1234567891011', '11111', '55555555')
+values('NY Times', 'Holly Wood', '1234567891011', '11111', '55555555');
 
 
 
 
 insert into books (author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name, quantity)
-values('Matthew', 'Religious', '77777777', 987 , 350, '12345679', 'Bible', 5, 'GOD', 21)
+values('Matthew', 'Religious', '77777777', 987 , 350, '12345679', 'Bible', 5, 'GOD', 21);
 
 insert into books (author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name, quantity)
-values('Muhammad', 'Religious', '77777777', 610 , 500, '12345678', 'Quran', 8, 'GOD', 34)
+values('Muhammad', 'Religious', '77777777', 610 , 500, '12345678', 'Quran', 8, 'GOD', 34);
 
 insert into books (author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name, quantity)
-values('Jack Lennon', 'Sci-Fi', '55555555', 400 , 700, '12345677', 'Game of Thrones', 3, 'NY Times', 55)
+values('Jack Lennon', 'Sci-Fi', '55555555', 400 , 700, '12345677', 'Game of Thrones', 3, 'NY Times', 55);
 
 insert into books (author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name, quantity)
-values('Michael Bay', 'Action', '55555555', 150 , 250, '12345676', 'Transformers', 1, 'NY Times', 89)
+values('Michael Bay', 'Action', '55555555', 150 , 250, '12345676', 'Transformers', 1, 'NY Times', 89);
 
 
 
 
 insert into bookstore (bill_info, ship_info, order_num, isbn, u_id)
-values('bill_info_3', 'ship_info_3', '12345679', '12345676', '12345677')
+values('bill_info_3', 'ship_info_3', '12345679', '12345676', '12345677');
 
 insert into bookstore (bill_info, ship_info, order_num, isbn, u_id)
-values('bill_info_3', 'ship_info_3', '12345678', '12345677', '12345677')
-
-
-insert into bookstore (bill_info, ship_info, order_num, isbn, u_id)
-values('bill_info_1', 'ship_info_1', '12345677', '12345677', '12345678')
-
-insert into bookstore (bill_info, ship_info, order_num, isbn, u_id)
-values('bill_info_1', 'ship_info_1', '12345676', '12345679', '12345678')
+values('bill_info_3', 'ship_info_3', '12345678', '12345677', '12345677');
 
 
 insert into bookstore (bill_info, ship_info, order_num, isbn, u_id)
-values('bill_info_2', 'ship_info_2', '12345675', '12345679', '12345679')
+values('bill_info_1', 'ship_info_1', '12345677', '12345677', '12345678');
 
 insert into bookstore (bill_info, ship_info, order_num, isbn, u_id)
-values('bill_info_2', 'ship_info_2', '12345674', '12345678', '12345679')
+values('bill_info_1', 'ship_info_1', '12345676', '12345679', '12345678');
+
 
 insert into bookstore (bill_info, ship_info, order_num, isbn, u_id)
-values('bill_info_2', 'ship_info_2', '12345673', '12345677', '12345679')
+values('bill_info_2', 'ship_info_2', '12345675', '12345679', '12345679');
+
+insert into bookstore (bill_info, ship_info, order_num, isbn, u_id)
+values('bill_info_2', 'ship_info_2', '12345674', '12345678', '12345679');
+
+insert into bookstore (bill_info, ship_info, order_num, isbn, u_id)
+values('bill_info_2', 'ship_info_2', '12345673', '12345677', '12345679');
 
 
 
 
 insert into warehouse (bill_info, ship_info, order_num)
-values('bill_info_3', 'ship_info_3', '12345679')
+values('bill_info_3', 'ship_info_3', '12345679');
 
 insert into warehouse (bill_info, ship_info, order_num)
-values('bill_info_3', 'ship_info_3', '12345678')
-
-
-insert into warehouse (bill_info, ship_info, order_num)
-values('bill_info_1', 'ship_info_1', '12345677')
-
-insert into warehouse (bill_info, ship_info, order_num)
-values('bill_info_1', 'ship_info_1', '12345676')
+values('bill_info_3', 'ship_info_3', '12345678');
 
 
 insert into warehouse (bill_info, ship_info, order_num)
-values('bill_info_2', 'ship_info_2', '12345675')
+values('bill_info_1', 'ship_info_1', '12345677');
 
 insert into warehouse (bill_info, ship_info, order_num)
-values('bill_info_2', 'ship_info_2', '12345674')
+values('bill_info_1', 'ship_info_1', '12345676');
+
 
 insert into warehouse (bill_info, ship_info, order_num)
-values('bill_info_2', 'ship_info_2', '12345673')
+values('bill_info_2', 'ship_info_2', '12345675');
+
+insert into warehouse (bill_info, ship_info, order_num)
+values('bill_info_2', 'ship_info_2', '12345674');
+
+insert into warehouse (bill_info, ship_info, order_num)
+values('bill_info_2', 'ship_info_2', '12345673');

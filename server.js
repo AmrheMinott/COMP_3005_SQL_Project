@@ -1,7 +1,8 @@
 const {Client}  = require("pg")
 const express   = require("express")
 const app       = express()
-const util = require("util")
+const util      = require("util")
+const unique    = require("uuid")
 
 app.use(express.json())
 app.use(express.static("."))
@@ -13,6 +14,7 @@ const client = new Client({
   "port":     "5432",
   "database": "postgres"
 })
+
 
 let server_uIDs;
 let user;
@@ -108,7 +110,12 @@ async function insertBook(req , res){
 
     // we are making the query string so we can add the book from the "boss"
     var insertBookQuery = "insert into books (author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name, quantity) values(";
+
     console.log(req.body);
+
+    var pub_id = unique()
+    console.log("First 8 characters of " + pub_id.substring(0,8));
+
     insertBookQuery = insertBookQuery.concat("'");
     insertBookQuery = insertBookQuery.concat(req.body.author);
     insertBookQuery = insertBookQuery.concat("',");
@@ -118,7 +125,8 @@ async function insertBook(req , res){
     insertBookQuery = insertBookQuery.concat("',");
 
     insertBookQuery = insertBookQuery.concat("'");
-    insertBookQuery = insertBookQuery.concat(req.body.pub_id);
+    // insertBookQuery = insertBookQuery.concat(req.body.pub_id);
+    insertBookQuery = insertBookQuery.concat(pub_id.substring(0,8));
     insertBookQuery = insertBookQuery.concat("',");
 
     insertBookQuery = insertBookQuery.concat("'");
@@ -253,12 +261,18 @@ async function addToBookStoreCart(){
 
     var addToCartQuery = "insert into bookstore(bill_info, ship_info, order_num, isbn, u_id) values(";
 
+    var order_num = unique(); // a unique string is generated for the order_num to be added on the server-side
+
     addToCartQuery = addToCartQuery.concat("'");
     addToCartQuery = addToCartQuery.concat(user.bill_info);
     addToCartQuery = addToCartQuery.concat("',");
 
     addToCartQuery = addToCartQuery.concat("'");
     addToCartQuery = addToCartQuery.concat(user.ship_info);
+    addToCartQuery = addToCartQuery.concat("',");
+
+    addToCartQuery = addToCartQuery.concat("'");
+    addToCartQuery = addToCartQuery.concat(order_num.substring(0,21));
     addToCartQuery = addToCartQuery.concat("',");
 
     addToCartQuery = addToCartQuery.concat("'");
