@@ -31,6 +31,7 @@ Documents to find in Project
 Main Directory
 
   here
+  
     index.html - main entry point to project when server is run from the terminal and calling http://localhost:3000/
 
     book_store.js - this .js file that handles functionality of index.html
