@@ -1,12 +1,14 @@
-const {Client}  = require("pg")
+const {Client}  = require("pg") // postgres node.js creation
 const express   = require("express")
-const app       = express()
-const util      = require("util")
-const unique    = require("uuid")
+const app       = express() // this give me the ability to make request going in and out of th server
+const util      = require("util") // so I can print things that look nice
+const unique    = require("uuid") // generates a unique string of characters
 
 app.use(express.json())
 app.use(express.static("."))
 
+
+// this is the postgres account details used to sign into the server. This may have to change interms of the user, password, port and databse name
 const client = new Client({
   "user":     "postgres",
   "password": "admin",
@@ -30,6 +32,7 @@ async function connectAndStart(){
 }
 
 
+// this goes on the SQL databse and gets the user id that are present in the USER table.
 app.get("/getUIDs", connectToDB);
 async function connectToDB(req, res){
   let result = {}
@@ -100,6 +103,80 @@ async function insertUser(req , res){
 
 
 
+app.post("/addToCart", addToBookStoreCart);
+async function addToBookStoreCart(){
+
+  // we got the isbn of the book to add to the Book Store
+  let isbn = req.body.isbn
+  console.log("addToBookStoreCart: isbn -> " + isbn);
+
+  let result = {}
+  // make a query to add to the Book Store using the credentials of the user on the server
+  try {
+
+    var addToCartQuery = "insert into bookstore(bill_info, ship_info, order_num, isbn, u_id) values(";
+
+    var order_num = unique(); // a unique string is generated for the order_num to be added on the server-side
+
+
+    // here we are building the SQL query by taking the values from the body of the POST request
+    addToCartQuery = addToCartQuery.concat("'");
+    addToCartQuery = addToCartQuery.concat(user.bill_info);
+    addToCartQuery = addToCartQuery.concat("',");
+
+    addToCartQuery = addToCartQuery.concat("'");
+    addToCartQuery = addToCartQuery.concat(user.ship_info);
+    addToCartQuery = addToCartQuery.concat("',");
+
+    addToCartQuery = addToCartQuery.concat("'");
+    addToCartQuery = addToCartQuery.concat(order_num.substring(0,21));
+    addToCartQuery = addToCartQuery.concat("',");
+
+    addToCartQuery = addToCartQuery.concat("'");
+    addToCartQuery = addToCartQuery.concat(isbn);
+    addToCartQuery = addToCartQuery.concat("',");
+
+    addToCartQuery = addToCartQuery.concat("'");
+    addToCartQuery = addToCartQuery.concat(user.u_id);
+    // addToCartQuery = addToCartQuery.concat(official_uid);
+    addToCartQuery = addToCartQuery.concat("'");
+
+
+    addToCartQuery = addToCartQuery.concat(")");
+
+    await client.query(addToCartQuery);
+
+    result.success = true
+
+    res.setHeader("content-type" , "application/json");
+    res.send(JSON.stringify(result));
+
+    console.log("addToBookStore POST: connected to server");
+
+  } catch (e){
+
+    result.success = false
+
+  } finally {
+    res.setHeader("content-type" , "application/json");
+    res.send(JSON.stringify(result));
+    console.log("addToBookStore POST: NOT connected to server");
+  }
+
+}
+
+
+app.post("/userId" , theUserId);
+async function theUserId(req , res){
+  let result = {}
+  official_uid = req.body.u_id
+  result.success = true
+  console.log("U_ID on server-side in post function theUserId is " + official_uid);
+
+  res.send(JSON.stringify(result));
+}
+
+
 
 // the Boss does all of this
 app.post("/addBook" , insertBook);
@@ -113,8 +190,12 @@ async function insertBook(req , res){
 
     console.log(req.body);
 
+    // here I generate a unique ID and i'm using that UUID to create the Publisher Id for the Database pub_id
     var pub_id = unique()
     console.log("First 8 characters of " + pub_id.substring(0,8));
+
+
+    // here we are building the SQL query by taking the values from the body of the POST request
 
     insertBookQuery = insertBookQuery.concat("'");
     insertBookQuery = insertBookQuery.concat(req.body.author);
@@ -246,78 +327,6 @@ async function getBooks(req, res){
 
 
 
-
-
-app.post("/addToCart", addToBookStoreCart);
-async function addToBookStoreCart(){
-
-  // we got the isbn of the book to add to the Book Store
-  let isbn = req.body.isbn
-  console.log("addToBookStoreCart: isbn -> " + isbn);
-
-  let result = {}
-  // make a query to add to the Book Store using the credentials of the user on the server
-  try {
-
-    var addToCartQuery = "insert into bookstore(bill_info, ship_info, order_num, isbn, u_id) values(";
-
-    var order_num = unique(); // a unique string is generated for the order_num to be added on the server-side
-
-    addToCartQuery = addToCartQuery.concat("'");
-    addToCartQuery = addToCartQuery.concat(user.bill_info);
-    addToCartQuery = addToCartQuery.concat("',");
-
-    addToCartQuery = addToCartQuery.concat("'");
-    addToCartQuery = addToCartQuery.concat(user.ship_info);
-    addToCartQuery = addToCartQuery.concat("',");
-
-    addToCartQuery = addToCartQuery.concat("'");
-    addToCartQuery = addToCartQuery.concat(order_num.substring(0,21));
-    addToCartQuery = addToCartQuery.concat("',");
-
-    addToCartQuery = addToCartQuery.concat("'");
-    addToCartQuery = addToCartQuery.concat(isbn);
-    addToCartQuery = addToCartQuery.concat("',");
-
-    addToCartQuery = addToCartQuery.concat("'");
-    addToCartQuery = addToCartQuery.concat(user.u_id);
-    // addToCartQuery = addToCartQuery.concat(official_uid);
-    addToCartQuery = addToCartQuery.concat("'");
-
-
-    addToCartQuery = addToCartQuery.concat(")");
-
-    await client.query(addToCartQuery);
-
-    result.success = true
-
-    res.setHeader("content-type" , "application/json");
-    res.send(JSON.stringify(result));
-
-    console.log("addToBookStore POST: connected to server");
-
-  } catch (e){
-
-    result.success = false
-
-  } finally {
-    res.setHeader("content-type" , "application/json");
-    res.send(JSON.stringify(result));
-    console.log("addToBookStore POST: NOT connected to server");
-  }
-
-}
-
-
-app.post("/userId" , theUserId);
-async function theUserId(req , res){
-  let result = {}
-  official_uid = req.body.u_id
-  result.success = true
-  console.log("U_ID on server-side in post function theUserId is " + official_uid);
-
-  res.send(JSON.stringify(result));
-}
 
 
 
