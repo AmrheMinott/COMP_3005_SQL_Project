@@ -104,7 +104,7 @@ async function insertUser(req , res){
 
 
 app.post("/addToCart", addToBookStoreCart);
-async function addToBookStoreCart(){
+async function addToBookStoreCart(req , res){
 
   // we got the isbn of the book to add to the Book Store
   let isbn = req.body.isbn
@@ -115,6 +115,8 @@ async function addToBookStoreCart(){
   try {
 
     var addToCartQuery = "insert into bookstore(bill_info, ship_info, order_num, isbn, u_id) values(";
+
+
 
     var order_num = unique(); // a unique string is generated for the order_num to be added on the server-side
 
@@ -146,12 +148,44 @@ async function addToBookStoreCart(){
 
     await client.query(addToCartQuery);
 
+
+    // when the book is added to the cart then the quantity is decreased for that book
+    var updateQuantityQuery = "update books set quantity = quantity - 1 where isbn = " + isbn
+
+    await client.query(updateQuantityQuery)
+
     result.success = true
 
     res.setHeader("content-type" , "application/json");
     res.send(JSON.stringify(result));
 
     console.log("addToBookStore POST: connected to server");
+
+  } catch (e){
+
+    result.success = false
+
+  } finally {
+    res.setHeader("content-type" , "application/json");
+    res.send(JSON.stringify(result));
+    console.log("addToBookStore POST: NOT connected to server");
+  }
+
+}
+
+app.get("/viewCart" , viewCart)
+async function viewCart(req , res){
+
+  let result = {}
+
+  try {
+
+    var getItemsInCartQuery = "select * from bookstore where u_id = " + official_uid
+
+    let query = await client.query(getItemsInCartQuery)
+
+    result.success = true
+    result.result = query.rows
 
   } catch (e){
 
