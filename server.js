@@ -189,17 +189,17 @@ async function viewCart(req , res){
 
     result.success = true
     result.result = query.rows
-    console.log("addToBookStore POST: server had success");
+    console.log("viewCart POST: server had success");
 
   } catch (e){
 
     result.success = false
-    console.log("addToBookStore POST: NOT connected to server");
+    console.log("viewCart POST: NOT connected to server");
 
   } finally {
     res.setHeader("content-type" , "application/json");
     res.send(JSON.stringify(result));
-    console.log("addToBookStore POST: something was sent");
+    console.log("viewCart POST: something was sent");
     console.log(result);
   }
 
