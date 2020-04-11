@@ -399,7 +399,8 @@ async function getBooks(req, res){
     let getBooksResult = await client.query("select * from books");
     let books = getBooksResult.rows;
 
-    console.log("getBooks GET: We have gotten the books" + books);
+    console.log("getBooks GET: We have gotten the books")
+    console.log(books);
 
     res.setHeader("content-type" , "application/json");
     res.status(200).send(JSON.stringify(books));
