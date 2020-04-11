@@ -127,6 +127,7 @@ async function addToBookStoreCart(req , res){
 
     console.log("addToBookStoreCart: currentUser[0].bill_info " + currentUser[0].bill_info);
 
+    // this if statement using determines if the user actually has a file for us to add their bill_info and ship_info to the query
     if (currentUser[0].bill_info != undefined){
       // here we are building the SQL query by taking the values from the body of the POST request
       addToCartQuery = addToCartQuery.concat("'");
@@ -153,6 +154,7 @@ async function addToBookStoreCart(req , res){
 
       addToCartQuery = addToCartQuery.concat(")");
 
+      // execute add query to the bookstore i.e. the cart
       await client.query(addToCartQuery);
     }
 
@@ -232,10 +234,7 @@ async function removeFromBookStoreCart(req , res){
 
     await client.query(deleteFromCartQuery);
 
-    // when the book is removed from the cart then the quantity is increased for that book
-    var updateQuantityQuery = "update books set quantity = quantity + 1 where isbn = '" + req.body.isbn + "'"
 
-    await client.query(updateQuantityQuery)
 
     console.log("removeFromBookStoreCart POST: Query Execution was a success");
 
@@ -244,7 +243,7 @@ async function removeFromBookStoreCart(req , res){
   } catch (e){
 
     result.success = false
-    console.log("removeFromBookStoreCart POST: Query Execution was NOT a success");
+    console.log("removeFromBookStoreCart POST: Query Execution was NOT a SUCCESS");
 
   } finally {
     res.setHeader("content-type" , "application/json");
@@ -252,6 +251,43 @@ async function removeFromBookStoreCart(req , res){
     console.log("removeFromBookStoreCart POST: something was sent");
     console.log(result);
   }
+
+}
+
+
+// updates the number of books for the specified isbn on the server
+app.post("/updateQuantity" , updateQuantity)
+async function updateQuantity(req, res){
+
+  let loopCount = 0
+  let result
+  for (var i = 0; i < req.body.count; i++){
+
+    try {
+
+      // when the book is removed from the cart then the quantity is increased for that book
+      var updateQuantityQuery = "update books set quantity = quantity + 1 where isbn = '" + req.body.isbn + "'"
+
+      console.log("updateQuantity: Inside the for loop");
+
+      await client.query(updateQuantityQuery)
+
+      result = true
+
+      console.log("updateQuantity: Query Execution was a SUCCESS");
+      console.log(result);
+    } catch {
+      console.log("updateQuantity: Query Execution was NOT a SUCCESS");
+      result = false
+      console.log(result);
+    } finally {
+      console.log("updateQuantity: FINALLY");
+      console.log(result);
+    }
+
+    loopCount ++
+  }
+  console.log("loopCount " + loopCount);
 
 }
 

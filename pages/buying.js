@@ -1,5 +1,4 @@
 
-
 let isbn;
 
 async function getBooks(){
@@ -77,7 +76,7 @@ async function viewCart(){
     div.innerHTML = "" // we clear the innerHTML before adding anything
 
 
-    // we are adding the books the user has in the cart currently to be displayed on the screen if there was a success on the server 
+    // we are adding the books the user has in the cart currently to be displayed on the screen if there was a success on the server
     if (booksInCart.success){
 
       // this object has the u_id of the specified user
@@ -125,12 +124,53 @@ async function removeFromCart(checked , isbn, u_id){
       })
     })
 
+
+    // makes a request to the server
+    updateQuantityFunction(isbn)
+
   }
 
 
 }
 
 
+
+
+async function updateQuantityFunction(isbn){
+
+  // get the div where all the input tags are
+  let div = document.getElementById("viewCartDiv");
+
+  let counter = 0;
+
+
+  // get all the children
+  let children = div.childNodes;
+
+  // we are looking for the INPUT tags and the one that have a the isbn of the book that we are looking for exactly
+  for (child of children){
+    if (child.tagName == "INPUT" && child.id == isbn){
+      counter ++;
+    }
+  }
+
+  console.log("counter: " + counter + " isbn " + isbn);
+
+  // make a POST request to the server to update the values for the quntity on the books on the server
+  await fetch("http://localhost:3000/updateQuantity",
+  {
+    method:"POST",
+    headers:{
+      "content-type":"application/json"
+    },
+    body:JSON.stringify({
+      count:counter,
+      isbn:isbn
+    })
+  })
+
+
+}
 
 
 
