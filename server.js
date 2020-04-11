@@ -114,54 +114,63 @@ async function addToBookStoreCart(req , res){
   // make a query to add to the Book Store using the credentials of the user on the server
   try {
 
-    var addToCartQuery = "insert into bookstore(bill_info, ship_info, order_num, isbn, u_id) values(";
+    // gets me the user's ship_info and bill_info based on that u_id
+    let currentUserResult =  await client.query("select * from users where u_id = '" + official_uid + "'")
+    let currentUser = currentUserResult.rows
+    console.log("addToBookStoreCart: official_uid = " + official_uid + " currentUser ");
+    console.log(currentUser);
 
 
-
-    var order_num = unique(); // a unique string is generated for the order_num to be added on the server-side
-
-
-    // here we are building the SQL query by taking the values from the body of the POST request
-    addToCartQuery = addToCartQuery.concat("'");
-    addToCartQuery = addToCartQuery.concat(user.bill_info);
-    addToCartQuery = addToCartQuery.concat("',");
-
-    addToCartQuery = addToCartQuery.concat("'");
-    addToCartQuery = addToCartQuery.concat(user.ship_info);
-    addToCartQuery = addToCartQuery.concat("',");
-
-    addToCartQuery = addToCartQuery.concat("'");
-    addToCartQuery = addToCartQuery.concat(order_num.substring(0,21));
-    addToCartQuery = addToCartQuery.concat("',");
-
-    addToCartQuery = addToCartQuery.concat("'");
-    addToCartQuery = addToCartQuery.concat(isbn);
-    addToCartQuery = addToCartQuery.concat("',");
-
-    addToCartQuery = addToCartQuery.concat("'");
-    addToCartQuery = addToCartQuery.concat(user.u_id);
-    // addToCartQuery = addToCartQuery.concat(official_uid);
-    addToCartQuery = addToCartQuery.concat("'");
+    // this is where the query is built to be sent to the server to add the order by the user
+    var addToCartQuery = "insert into bookstore(bill_info, ship_info, isbn, u_id) values(";
 
 
-    addToCartQuery = addToCartQuery.concat(")");
+    console.log("addToBookStoreCart: currentUser[0].bill_info " + currentUser[0].bill_info);
 
-    await client.query(addToCartQuery);
+    if (currentUser[0].bill_info != undefined){
+      // here we are building the SQL query by taking the values from the body of the POST request
+      addToCartQuery = addToCartQuery.concat("'");
+      addToCartQuery = addToCartQuery.concat(currentUser[0].bill_info);
+      addToCartQuery = addToCartQuery.concat("',");
+
+      addToCartQuery = addToCartQuery.concat("'");
+      addToCartQuery = addToCartQuery.concat(currentUser[0].ship_info);
+      addToCartQuery = addToCartQuery.concat("',");
+
+      // addToCartQuery = addToCartQuery.concat("'");
+      // addToCartQuery = addToCartQuery.concat(order_num.substring(0,21));
+      // addToCartQuery = addToCartQuery.concat("',");
+
+      addToCartQuery = addToCartQuery.concat("'");
+      addToCartQuery = addToCartQuery.concat(isbn);
+      addToCartQuery = addToCartQuery.concat("',");
+
+      addToCartQuery = addToCartQuery.concat("'");
+      addToCartQuery = addToCartQuery.concat(currentUser[0].u_id);
+      // addToCartQuery = addToCartQuery.concat(official_uid);
+      addToCartQuery = addToCartQuery.concat("'");
+
+
+      addToCartQuery = addToCartQuery.concat(")");
+
+      await client.query(addToCartQuery);
+    }
+
 
 
     // when the book is added to the cart then the quantity is decreased for that book
-    var updateQuantityQuery = "update books set quantity = quantity - 1 where isbn = " + isbn
+    var updateQuantityQuery = "update books set quantity = quantity - 1 where isbn = '" + isbn + "'"
 
     await client.query(updateQuantityQuery)
 
     result.success = true
 
-    console.log("addToBookStore POST: connected to server");
+    console.log("addToBookStore POST: Query Execution was a success");
 
   } catch (e){
 
     result.success = false
-    console.log("addToBookStore POST: NOT connected to server");
+    console.log("addToBookStore POST: Query Execution was NOT a success");
 
   } finally {
     res.setHeader("content-type" , "application/json");
@@ -174,32 +183,35 @@ async function addToBookStoreCart(req , res){
 
 
 
-
+// this route and accompanying function gets the orders that the user has made on the server
 app.get("/viewCart" , viewCart)
 async function viewCart(req , res){
+
 
   let result = {}
 
   try {
 
     // this query gets all the books on the server for the user id
-    var getItemsInCartQuery = "select * from bookstore where u_id = " + official_uid
+    var getItemsInCartQuery = "select * from bookstore where u_id = '"+official_uid + "'"
 
+    console.log("official_uid = " + official_uid);
     let query = await client.query(getItemsInCartQuery)
 
     result.success = true
     result.result = query.rows
-    console.log("viewCart POST: server had success");
+    console.log("viewCart POST: Query Execution was a success");
+
 
   } catch (e){
 
     result.success = false
-    console.log("viewCart POST: NOT connected to server");
+    console.log("viewCart POST: Query Execution was NOT a success");
 
   } finally {
     res.setHeader("content-type" , "application/json");
     res.send(JSON.stringify(result));
-    console.log("viewCart POST: something was sent");
+    console.log("official_uid => " + official_uid);
     console.log(result);
   }
 
@@ -210,31 +222,29 @@ async function viewCart(req , res){
 app.post("/removeFromCart", removeFromBookStoreCart);
 async function removeFromBookStoreCart(req , res){
 
-
   let result = {}
 
   try {
 
     // make a query to remove a book from Book Store using the u_id and isbn of the specified book
-    var deleteFromCartQuery = "delete from bookstore where u_id = " + req.body.u_id + " && isbn = " + req.body.isbn
+    var deleteFromCartQuery = "delete from bookstore where u_id = '" +
+    req.body.u_id + "'" + " and isbn = '" + req.body.isbn + "'"
 
     await client.query(deleteFromCartQuery);
 
-
-
     // when the book is removed from the cart then the quantity is increased for that book
-    var updateQuantityQuery = "update books set quantity = quantity + 1 where isbn = " + req.body.isbn
+    var updateQuantityQuery = "update books set quantity = quantity + 1 where isbn = '" + req.body.isbn + "'"
 
     await client.query(updateQuantityQuery)
 
-    console.log("removeFromBookStoreCart POST: connected to server");
+    console.log("removeFromBookStoreCart POST: Query Execution was a success");
 
     result.success = true
 
   } catch (e){
 
     result.success = false
-    console.log("removeFromBookStoreCart POST: NOT connected to server");
+    console.log("removeFromBookStoreCart POST: Query Execution was NOT a success");
 
   } finally {
     res.setHeader("content-type" , "application/json");
@@ -326,11 +336,11 @@ async function insertBook(req , res){
     await client.query(insertBookQuery);
     result.success = true
 
-    console.log("insertBook: Connection to server: SUCCESS");
+    console.log("insertBook: Query Execution was a SUCCESS");
 
   } catch (e){
 
-    console.log("insertBook: Connection to server: NO SUCCESS");
+    console.log("insertBook: Query Execution was NOT a SUCCESS");
     result.success = false
 
   } finally {

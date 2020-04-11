@@ -15,7 +15,8 @@ async function connectToDB(){
 
 
   if (server_uIDs.length > 1 || server_uIDs != undefined){
-
+    // we good here as it checks out
+    return true
   } else {
     return false
   }
@@ -49,7 +50,9 @@ async function checkUserIn(){
     await fetch("http://localhost:3000/userId", {
       method:"POST",
       headers:{"content-type":"application/json"},
-      body:JSON.stringify({u_id:u_idTextBox.value})
+      body:JSON.stringify({
+        u_id:u_idTextBox.value
+      })
     })
 
     window.location.href = "/pages/buying.html"

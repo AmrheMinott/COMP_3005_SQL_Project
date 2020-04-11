@@ -42,24 +42,13 @@ create table books(
 create table bookstore(
   bill_info	varchar(21),
 	ship_info	varchar(21),
-  order_num	varchar(21),
+  order_num	serial,
   isbn		varchar(8),
 	u_id		varchar(21),
 
 	primary key (order_num),
-	foreign key (bill_info) references users
-		on delete cascade
-		on update cascade,
-	foreign key (ship_info) references users
-		on delete cascade
-		on update cascade,
-	foreign key (u_id) references users
-		on delete cascade
-		on update cascade,
 
 	foreign key (isbn) references books (isbn)
-		on delete cascade
-		on update cascade
 
 );
 
@@ -68,16 +57,7 @@ create table warehouse(
 	bill_info	varchar(21),
 	ship_info	varchar(21),
 	order_num	varchar(21),
-	tracking_info	serial primary key,
+	tracking_info	serial primary key
 
-	foreign key (bill_info) references bookstore
-		on delete cascade
-		on update cascade,
-	foreign key (ship_info) references bookstore
-		on delete cascade
-		on update cascade,
-	foreign key (order_num) references bookstore
-		on delete cascade
-		on update cascade
 
 );

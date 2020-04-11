@@ -40,28 +40,28 @@ values('Michael Bay', 'Action', '55555555', 150 , 250, '12345676', 'Transformers
 
 
 
-insert into bookstore (bill_info, ship_info, order_num, isbn, u_id)
-values('bill_info_3', 'ship_info_3', '12345679', '12345676', '12345677');
+insert into bookstore (bill_info, ship_info, isbn, u_id)
+values('bill_info_3', 'ship_info_3', '12345676', '12345677');
 
-insert into bookstore (bill_info, ship_info, order_num, isbn, u_id)
-values('bill_info_3', 'ship_info_3', '12345678', '12345677', '12345677');
-
-
-insert into bookstore (bill_info, ship_info, order_num, isbn, u_id)
-values('bill_info_1', 'ship_info_1', '12345677', '12345677', '12345678');
-
-insert into bookstore (bill_info, ship_info, order_num, isbn, u_id)
-values('bill_info_1', 'ship_info_1', '12345676', '12345679', '12345678');
+insert into bookstore (bill_info, ship_info, isbn, u_id)
+values('bill_info_3', 'ship_info_3', '12345677', '12345677');
 
 
-insert into bookstore (bill_info, ship_info, order_num, isbn, u_id)
-values('bill_info_2', 'ship_info_2', '12345675', '12345679', '12345679');
+insert into bookstore (bill_info, ship_info, isbn, u_id)
+values('bill_info_1', 'ship_info_1', '12345677', '12345678');
 
-insert into bookstore (bill_info, ship_info, order_num, isbn, u_id)
-values('bill_info_2', 'ship_info_2', '12345674', '12345678', '12345679');
+insert into bookstore (bill_info, ship_info, isbn, u_id)
+values('bill_info_1', 'ship_info_1', '12345679', '12345678');
 
-insert into bookstore (bill_info, ship_info, order_num, isbn, u_id)
-values('bill_info_2', 'ship_info_2', '12345673', '12345677', '12345679');
+
+insert into bookstore (bill_info, ship_info, isbn, u_id)
+values('bill_info_2', 'ship_info_2', '12345679', '12345679');
+
+insert into bookstore (bill_info, ship_info, isbn, u_id)
+values('bill_info_2', 'ship_info_2', '12345678', '12345679');
+
+insert into bookstore (bill_info, ship_info, isbn, u_id)
+values('bill_info_2', 'ship_info_2', '12345677', '12345679');
 
 
 

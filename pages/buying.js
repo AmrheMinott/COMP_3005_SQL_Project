@@ -49,7 +49,6 @@ async function addToCart(checked , isbn){
 
   if (checked){
 
-    /*
     let result = await fetch("http://localhost:3000/addToCart",
     {
       method:"POST",
@@ -60,13 +59,10 @@ async function addToCart(checked , isbn){
         isbn:isbn
       })
     })
-    */
 
   }
 
 }
-
-
 
 
 
@@ -81,26 +77,32 @@ async function viewCart(){
     div.innerHTML = "" // we clear the innerHTML before adding anything
 
 
-    // we are adding the books the user has in the cart
-    for (b of booksInCart.result) {
-      var breakLine = document.createElement("br");
-      var book      = document.createElement("input");
-      var bookLabel = document.createElement("label");
+    // we are adding the books the user has in the cart currently to be displayed on the screen if there was a success on the server 
+    if (booksInCart.success){
 
-      var innerHTML = "Order Number " + b.order_num + " ISBN " + b.isbn + " User ID " + b.u_id;
-      book.setAttribute("type" , "checkBox");
-      book.setAttribute("id" , b.isbn);
-      book.setAttribute("name" , b.u_id);
-      book.setAttribute("onchange", "removeFromCart(this.checked , this.id, this.name)");
-      bookLabel.innerHTML = innerHTML
+      // this object has the u_id of the specified user
+      for (b of booksInCart.result) {
+        var breakLine = document.createElement("br");
+        var book      = document.createElement("input");
+        var bookLabel = document.createElement("label");
 
-      div.appendChild(book);
-      div.appendChild(bookLabel);
-      div.appendChild(breakLine)
+        var innerHTML = "Order Number " + b.order_num + " ISBN " + b.isbn + " User ID " + b.u_id;
+        book.setAttribute("type" , "checkBox");
+        book.setAttribute("id" , b.isbn);
+        book.setAttribute("name" , b.u_id);
+        book.setAttribute("onchange", "removeFromCart(this.checked , this.id, this.name)");
+        bookLabel.innerHTML = innerHTML
+
+        div.appendChild(book);
+        div.appendChild(bookLabel);
+        div.appendChild(breakLine)
+      }
+
     }
 
+
   } catch(e) {
-    console.error("ERROR viewCart():");
+    console.error("ERROR viewCart():" + e);
   }
 
 
@@ -111,7 +113,6 @@ async function removeFromCart(checked , isbn, u_id){
 
   if (checked){
 
-    /*
     let result = await fetch("http://localhost:3000/removeFromCart",
     {
       method:"POST",
@@ -123,7 +124,6 @@ async function removeFromCart(checked , isbn, u_id){
         u_id:u_id
       })
     })
-    */
 
   }
 
