@@ -156,22 +156,24 @@ async function addToBookStoreCart(req , res){
 
     result.success = true
 
-    res.setHeader("content-type" , "application/json");
-    res.send(JSON.stringify(result));
-
     console.log("addToBookStore POST: connected to server");
 
   } catch (e){
 
     result.success = false
+    console.log("addToBookStore POST: NOT connected to server");
 
   } finally {
     res.setHeader("content-type" , "application/json");
     res.send(JSON.stringify(result));
-    console.log("addToBookStore POST: NOT connected to server");
+    console.log("addToBookStore POST: something was sent ");
+    console.log(result);
   }
 
 }
+
+
+
 
 app.get("/viewCart" , viewCart)
 async function viewCart(req , res){
@@ -180,21 +182,65 @@ async function viewCart(req , res){
 
   try {
 
+    // this query gets all the books on the server for the user id
     var getItemsInCartQuery = "select * from bookstore where u_id = " + official_uid
 
     let query = await client.query(getItemsInCartQuery)
 
     result.success = true
     result.result = query.rows
+    console.log("addToBookStore POST: server had success");
 
   } catch (e){
 
     result.success = false
+    console.log("addToBookStore POST: NOT connected to server");
 
   } finally {
     res.setHeader("content-type" , "application/json");
     res.send(JSON.stringify(result));
-    console.log("addToBookStore POST: NOT connected to server");
+    console.log("addToBookStore POST: something was sent");
+    console.log(result);
+  }
+
+}
+
+
+// this is the route we are using to remove the book from the bookstore table on the postgres pg4Admin
+app.post("/removeFromCart", removeFromBookStoreCart);
+async function removeFromBookStoreCart(req , res){
+
+
+  let result = {}
+
+  try {
+
+    // make a query to remove a book from Book Store using the u_id and isbn of the specified book
+    var deleteFromCartQuery = "delete from bookstore where u_id = " + req.body.u_id + " && isbn = " + req.body.isbn
+
+    await client.query(deleteFromCartQuery);
+
+
+
+    // when the book is removed from the cart then the quantity is increased for that book
+    var updateQuantityQuery = "update books set quantity = quantity + 1 where isbn = " + req.body.isbn
+
+    await client.query(updateQuantityQuery)
+
+    console.log("removeFromBookStoreCart POST: connected to server");
+
+    result.success = true
+
+  } catch (e){
+
+    result.success = false
+    console.log("removeFromBookStoreCart POST: NOT connected to server");
+
+  } finally {
+    res.setHeader("content-type" , "application/json");
+    res.send(JSON.stringify(result));
+    console.log("removeFromBookStoreCart POST: something was sent");
+    console.log(result);
   }
 
 }
@@ -208,6 +254,7 @@ async function theUserId(req , res){
   console.log("U_ID on server-side in post function theUserId is " + official_uid);
 
   res.send(JSON.stringify(result));
+  console.log(result);
 }
 
 
@@ -291,6 +338,8 @@ async function insertBook(req , res){
     console.log("insertBook: Connection to server: Sending");
     res.setHeader("content-type" , "application/json");
     res.send(JSON.stringify(result));
+    console.log("insertBook: something was sent");
+    console.log(result);
 
   }
 
@@ -327,9 +376,11 @@ async function removeBook(req, res){
 
   } finally {
 
-    console.log("removeBook: sending status to user");
     res.setHeader("content-type" , "application/json");
     res.send(JSON.stringify(result));
+    console.log("removeBook: something was sent");
+    console.log(result);
+
   }
 
 
