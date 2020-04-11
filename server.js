@@ -234,8 +234,6 @@ async function removeFromBookStoreCart(req , res){
 
     await client.query(deleteFromCartQuery);
 
-
-
     console.log("removeFromBookStoreCart POST: Query Execution was a success");
 
     result.success = true
@@ -318,8 +316,8 @@ async function insertBook(req , res){
     console.log(req.body);
 
     // here I generate a unique ID and i'm using that UUID to create the Publisher Id for the Database pub_id
-    var pub_id = unique()
-    console.log("First 8 characters of " + pub_id.substring(0,8));
+    var isbn = unique.v4()
+    console.log("First 8 characters of " + isbn.substring(0,8));
 
 
     // here we are building the SQL query by taking the values from the body of the POST request
@@ -333,8 +331,8 @@ async function insertBook(req , res){
     insertBookQuery = insertBookQuery.concat("',");
 
     insertBookQuery = insertBookQuery.concat("'");
-    // insertBookQuery = insertBookQuery.concat(req.body.pub_id);
-    insertBookQuery = insertBookQuery.concat(pub_id.substring(0,8));
+    insertBookQuery = insertBookQuery.concat(req.body.pub_id);
+
     insertBookQuery = insertBookQuery.concat("',");
 
     insertBookQuery = insertBookQuery.concat("'");
@@ -346,7 +344,8 @@ async function insertBook(req , res){
     insertBookQuery = insertBookQuery.concat("',");
 
     insertBookQuery = insertBookQuery.concat("'");
-    insertBookQuery = insertBookQuery.concat(req.body.isbn);
+    // insertBookQuery = insertBookQuery.concat(req.body.isbn);
+    insertBookQuery = insertBookQuery.concat(isbn.substring(0,8));
     insertBookQuery = insertBookQuery.concat("',");
 
     insertBookQuery = insertBookQuery.concat("'");
