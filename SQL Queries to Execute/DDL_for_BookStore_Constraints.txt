@@ -48,14 +48,18 @@ create table bookstore(
 
 	primary key (order_num),
 	foreign key (bill_info) references users
-		on delete cascade,
+		on delete cascade
+		on update cascade,
 	foreign key (ship_info) references users
-		on delete cascade,
+		on delete cascade
+		on update cascade,
 	foreign key (u_id) references users
-		on delete cascade,
+		on delete cascade
+		on update cascade,
 
 	foreign key (isbn) references books (isbn)
 		on delete cascade
+		on update cascade
 
 );
 
@@ -67,10 +71,13 @@ create table warehouse(
 	tracking_info	serial primary key,
 
 	foreign key (bill_info) references bookstore
-		on delete cascade,
+		on delete cascade
+		on update cascade,
 	foreign key (ship_info) references bookstore
-		on delete cascade,
+		on delete cascade
+		on update cascade,
 	foreign key (order_num) references bookstore
 		on delete cascade
+		on update cascade
 
 );
