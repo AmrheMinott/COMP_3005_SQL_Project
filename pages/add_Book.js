@@ -49,7 +49,7 @@ async function addBook(){
     return success.success
   } catch (e) {
     return success.success
-    console.log("ISSUE catch e");
+    console.log("ISSUE catch e" + e);
   }
 
 

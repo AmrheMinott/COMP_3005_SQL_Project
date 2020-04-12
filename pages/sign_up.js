@@ -1,6 +1,6 @@
 
 
-const CHARACTERAMT  = 8
+const CHARACTERAMT  = 21
 var server_uIDs     = [];
 
 async function connectToDB(){
