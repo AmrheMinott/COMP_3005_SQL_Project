@@ -321,7 +321,6 @@ async function insertBook(req , res){
 
 
     // here we are building the SQL query by taking the values from the body of the POST request
-
     insertBookQuery = insertBookQuery.concat("'");
     insertBookQuery = insertBookQuery.concat(req.body.author);
     insertBookQuery = insertBookQuery.concat("',");

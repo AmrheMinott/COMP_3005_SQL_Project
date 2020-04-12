@@ -10,7 +10,7 @@ async function addBook(){
   let pub_id = document.getElementById("pub_id").value;
   let num_of_pages = document.getElementById("num_of_pages").value;
   let price = document.getElementById("price").value;
-  let isbn = document.getElementById("isbn").value;
+  // let isbn = document.getElementById("isbn").value;
   let title = document.getElementById("title").value;
   let percent = document.getElementById("percent").value;
   let pub_name = document.getElementById("pub_name").value;
@@ -21,7 +21,7 @@ async function addBook(){
   body.pub_id = pub_id;
   body.num_of_pages = num_of_pages;
   body.price = price;
-  body.isbn = isbn;
+  // body.isbn = isbn;
   body.title = title;
   body.percent = percent;
   body.pub_name = pub_name;
@@ -30,7 +30,13 @@ async function addBook(){
   let success;
 
   try {
-    success = await fetch ("http://localhost:3000/addBook", {method:"POST", headers:{"content-type":"application/json"}, body:JSON.stringify(body)})
+    success = await fetch ("http://localhost:3000/addBook", {
+      method:"POST",
+      headers:{
+        "content-type":"application/json"
+      }, 
+      body:JSON.stringify(body)
+    })
 
     console.log("Success of books addition was a " + success.success);
 
