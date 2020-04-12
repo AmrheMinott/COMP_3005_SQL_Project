@@ -2,8 +2,8 @@
 let password = "hello"
 
 function enter(){
-  let bossTextBox = document.getElementById("boss_id");
+  let bossTextBox = document.getElementById("input");
   if (bossTextBox.value == password){
-    window.location.href = "/pages/add_Book.html";
+    window.location.href = "/pages/book_And_Report.html";
   }
 }

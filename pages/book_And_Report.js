@@ -46,9 +46,7 @@ async function addBook(){
       alert("There appears to be an issue")
     }
 
-    return success.success
   } catch (e) {
-    return success.success
     console.log("ISSUE catch e" + e);
   }
 
@@ -57,17 +55,22 @@ async function addBook(){
 
 
 
-
+// we take the isbn to remove the book on the SQL server
 async function removeBookByISBN(){
-  // we take the isbn to remove the book
 
+  // we are getting the ibsn from the input
   let isbn = document.getElementById("isbnRemove").value;
+
+  // make the request to the server
   await fetch ("http://localhost:3000/removeBook",
   {
     method:"POST",
     headers:{"content-type":"application/json"},
-    body:JSON.stringify({remove:isbn})
+    body:JSON.stringify({
+      remove:isbn
+    })
   })
+
 }
 
 
@@ -101,7 +104,7 @@ async function getAuthorReport(){
 
 
   } catch (e){
-    console.log("getAuthorReport: ERROR occured" + e);
+    console.log("getAuthorReport: ERROR occured " + e);
   }
 
 }
@@ -137,7 +140,7 @@ async function getGenreReport(){
 
 
   } catch (e){
-    console.log("getGenreReport: ERROR occured" + e);
+    console.log("getGenreReport: ERROR occured " + e);
   }
 
 }
