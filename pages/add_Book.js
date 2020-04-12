@@ -34,7 +34,7 @@ async function addBook(){
       method:"POST",
       headers:{
         "content-type":"application/json"
-      }, 
+      },
       body:JSON.stringify(body)
     })
 
@@ -69,13 +69,6 @@ async function removeBookByISBN(){
     body:JSON.stringify({remove:isbn})
   })
 }
-
-
-
-
-
-
-
 
 
 
