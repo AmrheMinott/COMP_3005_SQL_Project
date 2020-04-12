@@ -457,25 +457,56 @@ async function getBooks(req, res){
 
 
 
+app.get("/authorPerSalesRoute" , authorPerSales);
+async function authorPerSales(req, res){
+
+  try {
+
+    var authorQuery = await client.query("select  b.author, sum(b.price) from bookstore as bs, books as b where bs.isbn = b.isbn group by b.author")
+
+    console.log("authorPerSales: function went through nicely");
+    console.log(authorQuery.rows);
+
+    res.setHeader("content-type" , "application/json");
+    res.status(200).send(JSON.stringify(authorQuery.rows));
+  } catch (e){
+    console.log("authorPerSales: error => " + e);
+  }
+
+}
+
+
+
+app.get("/genrePerSalesRoute" , authorPerSales);
+async function genrePerSales(req, res){
+
+  try {
+
+    var genreQuery = await client.query("select  b.genre, sum(b.price) from bookstore as bs, books as b where bs.isbn = b.isbn group by b.genre")
+
+    console.log("genrePerSales: function went through nicely");
+    console.log(genreQuery.rows);
+
+    res.setHeader("content-type" , "application/json");
+    res.status(200).send(JSON.stringify(authorQuery.rows));
+  } catch (e){
+    console.log("genrePerSales: error => " + e);
+  }
+
+}
+
+
+
+
+
+
+
+
 
 
 
 
 app.listen(3000 , () => console.log("Server is listening on port 3000 of localhost"))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

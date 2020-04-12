@@ -73,6 +73,78 @@ async function removeBookByISBN(){
 
 
 
+let authorsDiv = document.getElementById("authorPerSalesDiv")
+
+// makes a request to the running server for the sales per author
+async function getAuthorReport(){
+
+  try {
+
+    authorsDiv.innerHTML = "" // set innerHTML to null when called
+
+    // gets the result from the server
+    var result = await fetch("http://localhost:3000/authorPerSalesRoute" , {method:"GET"});
+    let report = await result.json(); // parses result from server
+
+    // we are adding the reports for the author
+    for (r of report) {
+      var breakLine = document.createElement("br");
+      var reportLabel = document.createElement("label");
+
+      var innerHTML = "Author " + r.author + " Total " + r.sum;
+
+      reportLabel.innerHTML = innerHTML
+
+      authorsDiv.appendChild(reportLabel);
+      authorsDiv.appendChild(breakLine)
+    }
+
+
+  } catch (e){
+    console.log("getAuthorReport: ERROR occured" + e);
+  }
+
+}
+
+
+
+let genreDiv = document.getElementById("genrePerSalesDiv")
+
+// makes a request to the running server for the sales per genre
+async function getGenreReport(){
+
+  try {
+
+    genreDiv.innerHTML = "" // set innerHTML to null when called
+
+    // gets the result from the server
+    var result = await fetch("http://localhost:3000/genrePerSalesRoute" , {method:"GET"});
+    let report = await result.json(); // parses result from server
+
+
+    // we are adding the reports for the genre
+    for (r of report) {
+      var breakLine = document.createElement("br");
+      var reportLabel = document.createElement("label");
+
+      var innerHTML = "Genre " + r.genre + " Total " + r.sum;
+
+      reportLabel.innerHTML = innerHTML
+
+      genreDiv.appendChild(reportLabel);
+      genreDiv.appendChild(breakLine)
+    }
+
+
+  } catch (e){
+    console.log("getGenreReport: ERROR occured" + e);
+  }
+
+}
+
+
+
+
 
 
 
