@@ -471,7 +471,7 @@ async function authorPerSales(req, res){
 
     res.setHeader("content-type" , "application/json");
     res.status(200).send(JSON.stringify(authorQuery.rows));
-    
+
   } catch (e){
     console.log("authorPerSales: error => " + e);
   }
