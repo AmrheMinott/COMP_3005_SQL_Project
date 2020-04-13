@@ -65,7 +65,9 @@ async function removeBookByISBN(){
   await fetch ("http://localhost:3000/removeBook",
   {
     method:"POST",
-    headers:{"content-type":"application/json"},
+    headers:{
+      "content-type":"application/json"
+    },
     body:JSON.stringify({
       remove:isbn
     })
@@ -83,7 +85,7 @@ async function getAuthorReport(){
 
   try {
 
-    authorsDiv.innerHTML = "" // set innerHTML to null when called
+    authorsDiv.innerHTML = "" // set innerHTML to null when function is called
 
     // gets the result from the server
     var result = await fetch("http://localhost:3000/authorPerSalesRoute" , {method:"GET"});

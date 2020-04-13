@@ -47,9 +47,12 @@ async function checkUserIn(){
 
     console.log("checkUserIn after the if statement for the POST");
 
-    await fetch("http://localhost:3000/userId", {
+    await fetch("http://localhost:3000/userId",
+    {
       method:"POST",
-      headers:{"content-type":"application/json"},
+      headers:{
+        "content-type":"application/json"
+      },
       body:JSON.stringify({
         u_id:u_idTextBox.value
       })

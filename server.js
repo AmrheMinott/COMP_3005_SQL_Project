@@ -456,12 +456,14 @@ async function getBooks(req, res){
 }
 
 
-
+// this function handles a route where we query the postgres db for the
+// report of the authors and the sales they have made
 app.get("/authorPerSalesRoute" , authorPerSales);
 async function authorPerSales(req, res){
 
   try {
 
+    // where the query is executed
     var authorQuery = await client.query("select  b.author, sum(b.price) from bookstore as bs, books as b where bs.isbn = b.isbn group by b.author")
 
     console.log("authorPerSales: function went through nicely");
@@ -469,6 +471,7 @@ async function authorPerSales(req, res){
 
     res.setHeader("content-type" , "application/json");
     res.status(200).send(JSON.stringify(authorQuery.rows));
+    
   } catch (e){
     console.log("authorPerSales: error => " + e);
   }
@@ -476,12 +479,14 @@ async function authorPerSales(req, res){
 }
 
 
-
+// this function handles a route where we query the postgres db for the
+// report of the genre and the sales the genre have made
 app.get("/genrePerSalesRoute" , authorPerSales);
 async function genrePerSales(req, res){
 
   try {
 
+    // where the query is executed
     var genreQuery = await client.query("select  b.genre, sum(b.price) from bookstore as bs, books as b where bs.isbn = b.isbn group by b.genre")
 
     console.log("genrePerSales: function went through nicely");

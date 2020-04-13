@@ -84,7 +84,14 @@ async function insertUser(){
   let result;
 
   try {
-    result = await fetch ("http://localhost:3000/insertUser", {method:"POST", headers:{"content-type":"application/json"}, body:JSON.stringify(body)})
+    result = await fetch ("http://localhost:3000/insertUser",
+    {
+      method:"POST", headers:
+      {
+        "content-type":"application/json"
+      },
+      body:JSON.stringify(body)
+    })
 
     return result.success
 

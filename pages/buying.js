@@ -14,7 +14,7 @@ async function getBooks(){
     let div       = document.getElementById("booksDiv");
     div.innerHTML = "" // we clear the innerHTML before adding anything
 
-    // we are adding the books
+    // we are adding the books to the div
     for (b of books) {
       var breakLine = document.createElement("br");
       var book      = document.createElement("input");
@@ -41,10 +41,10 @@ async function getBooks(){
 
 
 
+// this function adds the selected books on the server of the bookstore
+async function addToCart(checked , isbnID){
 
-async function addToCart(checked , isbn){
-
-  console.log("addToCart: " + checked + " and isbn = " + isbn);
+  console.log("addToCart: checked = " + checked + " and isbn = " + isbnID);
 
   if (checked){
 
@@ -55,7 +55,7 @@ async function addToCart(checked , isbn){
         "content-type":"application/json"
       },
       body:JSON.stringify({
-        isbn:isbn
+        isbn:isbnID
       })
     })
 
@@ -64,13 +64,13 @@ async function addToCart(checked , isbn){
 }
 
 
-
+// this function makes me see the information on the bookstore
 async function viewCart(){
 
   try {
 
     var result  = await fetch("http://localhost:3000/viewCart" , {method:"GET"});
-    let booksInCart   = await result.json();
+    let booksInCart = await result.json();
 
     let div       = document.getElementById("viewCartDiv");
     div.innerHTML = "" // we clear the innerHTML before adding anything
@@ -99,13 +99,13 @@ async function viewCart(){
 
     }
 
-
   } catch(e) {
     console.error("ERROR viewCart():" + e);
   }
 
 
 }
+
 
 // this function is called from the onchange of the checkBoxes of the viewCart div
 async function removeFromCart(checked , isbn, u_id){
@@ -124,25 +124,21 @@ async function removeFromCart(checked , isbn, u_id){
       })
     })
 
-
     // makes a request to the server
     updateQuantityFunction(isbn)
-
   }
 
 
 }
 
 
-
-
+// this function updates quantity of book on the server
 async function updateQuantityFunction(isbn){
 
   // get the div where all the input tags are
   let div = document.getElementById("viewCartDiv");
 
   let counter = 0;
-
 
   // get all the children
   let children = div.childNodes;
@@ -171,10 +167,6 @@ async function updateQuantityFunction(isbn){
 
 
 }
-
-
-
-
 
 
 
