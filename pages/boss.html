@@ -2,6 +2,17 @@
 <html>
   <head>
     <title>Boss Page</title>
+    <style>
+      #input {
+        border-style: groove;
+        border-radius: 25px;
+      }
+      #enter_button {
+        background: rgb(28, 184, 65);
+        border-style: groove;
+        border-radius: 25px;
+      }
+    </style>
   </head>
   <body>
 
@@ -11,7 +22,7 @@
 
     Enter Password<input id="input", type="text", name="boss_id", placeholder="Boss Password">
 
-    <button type="button", onclick="enter()">ENTER</button>
+    <button id="enter_button", type="button", onclick="enter()">ENTER</button>
 
     <script src="boss.js"></script>
 

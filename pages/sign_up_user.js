@@ -53,7 +53,7 @@ async function doesSignUpValuesMeetRequirements(){
     }
 
     if (ship_infoTextBox.value.length == 0 || bill_infoTextBox.value.length == 0 || u_idTextBox.value.length == 0){
-      alert ("We Do not accept empty spaces");
+      alert("We Do not accept empty spaces");
       return
     }
 

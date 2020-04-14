@@ -163,7 +163,6 @@ async function removeFromCart(checked , isbn, u_id){
     updateQuantityFunction(isbn)
   }
 
-
 }
 
 
@@ -188,8 +187,7 @@ async function updateQuantityFunction(isbn){
   console.log("counter: " + counter + " isbn " + isbn);
 
   // make a POST request to the server to update the values for the quntity on the books on the server
-  await fetch("http://localhost:3000/updateQuantity",
-  {
+  await fetch("http://localhost:3000/updateQuantity", {
     method:"POST",
     headers:{
       "content-type":"application/json"
