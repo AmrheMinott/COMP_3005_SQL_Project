@@ -1,0 +1,84 @@
+
+
+
+insert into publishers (name, address, phone_num, bank_acc, pub_id)
+values('GOD', '123 Heaven Street', '5551234777777', '11111', '77777777');
+
+insert into publishers (name, address, phone_num, bank_acc, pub_id)
+values('NY Times', 'The New York Times Building, 620 Eighth Avenue', '8006984637', '11111', '55555555');
+
+insert into publishers (name, address, phone_num, bank_acc, pub_id)
+values('Pearson Education', '107 John Henry Menzies St, Beaconsfield', '5146930800', '12345', '33333333');
+
+insert into publishers (name, address, phone_num, bank_acc, pub_id)
+values('Macmillan Publishers', 'Equitable Life Building, 120 Broadway, New York', '16463075151', '87654', '44444444');
+
+
+
+
+
+
+insert into books (author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name, quantity)
+values('Matthew', 'Religious', '77777777', 987 , 350, '12345679', 'Bible', 5, 'GOD', 21);
+
+insert into books (author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name, quantity)
+values('Muhammad', 'Religious', '77777777', 610 , 500, '12345678', 'Quran', 8, 'GOD', 34);
+
+insert into books (author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name, quantity)
+values('Jack Lennon', 'Sci-Fi', '55555555', 400 , 700, '12345677', 'Game of Thrones', 3, 'NY Times', 55);
+
+insert into books (author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name, quantity)
+values('Michael Bay', 'Action', '55555555', 150 , 250, '12345676', 'Transformers', 1, 'NY Times', 89);
+
+
+insert into books (author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name, quantity)
+values('Jack Lennon', 'Sci-Fi', '44444444', 500 , 600, '12345675', 'Shirley Castle', 1, 'Macmillan Publishers', 5);
+
+insert into books (author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name, quantity)
+values('Michael Bay', 'Action', '44444444', 150 , 250, '12345674', 'Transformers', 1, 'Macmillan Publishers', 9);
+
+insert into books (author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name, quantity)
+values('Jack Lennon', 'Action', '44444444', 100 , 100, '12345673', 'Shirley Castle', 1, 'Macmillan Publishers', 5);
+
+insert into books (author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name, quantity)
+values('Muhammad', 'Religious', '44444444', 9000 , 10000, '12345672', 'Quran Surah', 7, 'Macmillan Publishers', 777);
+
+
+insert into books (author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name, quantity)
+values('Luke', 'Religious', '44444444', 2000 , 2700, '12345671', 'Luke', 10, 'Macmillan Publishers', 77);
+
+insert into books (author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name, quantity)
+values('Matthew', 'Religious', '44444444', 2000 , 2700, '12345670', 'Matthew Cronicles', 10, 'Macmillan Publishers', 77);
+
+insert into books (author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name, quantity)
+values('Jack Lennon', 'Action', '33333333', 100 , 100, '12345669', 'Shirley Castle', 1, 'Pearson Education', 5);
+
+insert into books (author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name, quantity)
+values('Muhammad', 'Religious', '33333333', 9000 , 10000, '12345668', 'Quran Surah', 7, 'Pearson Education', 888);
+
+
+insert into books (author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name, quantity)
+values('Luke', 'Religious', '33333333', 2000 , 2700, '12345667', 'Luke', 10, 'Pearson Education', 88);
+
+insert into books (author, genre, pub_id, num_of_pages, price, isbn, title, percent, pub_name, quantity)
+values('Matthew', 'Religious', '33333333', 2000 , 2700, '12345666', 'Matthew Cronicles', 10, 'Pearson Education', 8);
+
+
+
+
+
+
+insert into users (u_id, bill_info, ship_info)
+values ('12345679', 'bill_info_1', 'ship_info_1');
+
+insert into users (u_id, bill_info, ship_info)
+values ('12345678', 'bill_info_2', 'ship_info_2');
+
+insert into users (u_id, bill_info, ship_info)
+values ('12345677', 'bill_info_3', 'ship_info_3');
+
+insert into users (u_id, bill_info, ship_info)
+values ('12345676', 'bill_info_4', 'ship_info_4');
+
+insert into users (u_id, bill_info, ship_info)
+values ('12345675', 'bill_info_5', 'ship_info_5');
