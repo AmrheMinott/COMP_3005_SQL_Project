@@ -2,19 +2,45 @@
 <html>
   <head>
     <title>Sign Up</title>
+    <style>
+      #header {
+        border-style: groove;
+        border-color: red;
+        border-radius: 25px;
+        text-align: center;
+      }
+      #u_id {
+        border-color: red;
+        border-radius: 25px;
+      }
+      #ship_info {
+        border-color: red;
+        border-radius: 25px;
+      }
+      #bill_info {
+        border-color: red;
+        border-radius: 25px;
+      }
+
+      #submit{
+        background: rgb(28, 184, 65);
+        border-radius: 25px;
+      }
+
+    </style>
   </head>
   <body onload="connectToDB()">
 
-    <h1>Thank You for wanting to join our Family</h1>
+    <h1 id="header">Thank You for Wanting to Join Our Family</h1>
 
-    User ID<input id="u_id", type="text", name="u_id", placeholder="User ID">
+    User ID<input id="u_id", type="text", placeholder="User ID">
     <br>
-    Shipping Information<input id="ship_info", type="text", name="ship_info", placeholder="Shipping Information">
+    Shipping Information<input id="ship_info", type="text", placeholder="Shipping Information">
     <br>
-    Billing Information<input id="bill_info", type="text", name="bill_info", placeholder="Billing Information">
+    Billing Information<input id="bill_info", type="text", placeholder="Billing Information">
     <br>
 
-    <button type="button", onclick="doesSignUpValuesMeetRequirements()">SUBMIT and Thank You!!</button>
+    <button id="submit", type="button", onclick="doesSignUpValuesMeetRequirements()">SUBMIT Credentials!!</button>
     <br>
 
 

@@ -2,10 +2,43 @@
 <html>
   <head>
     <title>Add Book</title>
+    <style>
+      #header {
+        border-style: groove;
+        border-color: red;
+        text-align: center;
+        border-radius: 25px;
+      }
+      #view_cart {
+        background: rgb(66, 184, 221);
+        border-style: groove;
+        border-radius: 25px;
+      }
+      #isbnRemove {
+        background: rgb(66, 184, 221);
+        border-style: groove;
+        border-radius: 25px;
+      }
+      #remove_button {
+        background: rgb(202, 60, 60);
+        border-style: groove;
+        border-radius: 25px;
+      }
+      #author_report_button {
+        background: rgb(223, 117, 20);
+        border-style: groove;
+        border-radius: 25px;
+      }
+      #genre_report_button {
+        background: rgb(223, 117, 20);
+        border-style: groove;
+        border-radius: 25px;
+      }
+    </style>
   </head>
   <body>
 
-    <h1>Add Book Below</h1>
+    <h1 id="header">Add Book Below</h1>
 
     Author<input id="author", type="text", name="author", placeholder="Author">
     <br>
@@ -46,7 +79,7 @@
     ISBN<input id="isbnRemove", type="text", name="isbnRemove", placeholder="ISBN To Remove">
     <br>
 
-    <button type="button", onclick="removeBookByISBN()">Remove Book</button>
+    <button id="remove_button", type="button", onclick="removeBookByISBN()">Remove Book</button>
     <br>
     <br>
     <br>
@@ -58,13 +91,13 @@
 
     </div>
 
-    <button type="button", onclick="getAuthorReport()">Author Report</button>
+    <button id ="author_report_button", type="button", onclick="getAuthorReport()">Author Report</button>
 
 
     <div id ="genrePerSalesDiv">
 
     </div>
-    <button type="button", onclick="getGenreReport()">Genre Report</button>
+    <button id="genre_report_button", type="button", onclick="getGenreReport()">Genre Report</button>
 
 
     <script src="book_And_Report.js"></script>

@@ -109,19 +109,37 @@ async function viewCart(){
 
     // based on that hour we display an appropriate welcome to the user
     if (hr >= 2 && hr<11){
-      para.innerHTML = "Good Morning " + theUserIdFromCart + " Your Orders are Below"
+
+      if (theUserIdFromCart){
+        para.innerHTML = "Good Morning " + theUserIdFromCart + " Your Orders are Below"
+      } else {
+        para.innerHTML = "Good Morning Your Orders are Below"
+      }
+
     } else if (hr >= 11 && hr < 17){
-      para.innerHTML = "Good Afternoon " + theUserIdFromCart + " Your Orders are Below"
+
+      if (theUserIdFromCart){
+        para.innerHTML = "Good Afternoon " + theUserIdFromCart + " Your Orders are Below"
+      } else {
+        para.innerHTML = "Good Afternoon Your Orders are Below"
+      }
+
     } else {
-      para.innerHTML = "Good Night " + theUserIdFromCart + " Your Orders are Below"
+
+      if (theUserIdFromCart){
+        para.innerHTML = "Good Night " + theUserIdFromCart + " Your Orders are Below"
+      } else {
+        para.innerHTML = "Good Night Your Orders are Below"
+      }
+
     }
 
   } catch(e) {
     console.error("ERROR viewCart():" + e);
   }
 
-
 }
+
 
 
 // this function is called from the onchange of the checkBoxes of the viewCart div

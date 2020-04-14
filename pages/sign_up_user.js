@@ -52,6 +52,11 @@ async function doesSignUpValuesMeetRequirements(){
       return;
     }
 
+    if (ship_infoTextBox.value.length == 0 || bill_infoTextBox.value.length == 0 || u_idTextBox.value.length == 0){
+      alert ("We Do not accept empty spaces");
+      return
+    }
+
     // filters the inputs of the user to see if they meet the required length
     if (ship_infoTextBox.value.length > CHARACTERAMT || bill_infoTextBox.value.length > CHARACTERAMT){
       alert("Please check Shipping Information and Billing Inforamtion as one of them have not met the needed Number of Charcters \n\n ");

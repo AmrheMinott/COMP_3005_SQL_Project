@@ -2,15 +2,30 @@
 <html>
   <head>
     <title>Sign In</title>
+    <style>
+      #header {
+        border-style: groove;
+        border-color: red;
+        text-align: center;
+        border-radius: 25px;
+      }
+
+      #check_in{
+        background: rgb(28, 184, 65);
+        border-style: groove;
+        border-radius: 25px;
+      }
+
+    </style>
   </head>
   <body onload="connectToDB()">
 
-    <h1>Sign In Credentials Below</h1>
+    <h1 id="header">Sign In Credentials Below</h1>
 
-    User Id<input id="u_id", type="text", name="u_id", placeholder="User Id">
+    User Id<input id="u_id", type="text", placeholder="User Id">
     <br>
 
-    <button type="button" onclick="checkUserIn()">SUBMIT!!</button>
+    <button id= "check_in", type="button" onclick="checkUserIn()">SUBMIT!!</button>
 
     <script src="sign_in_user.js"></script>
   </body>

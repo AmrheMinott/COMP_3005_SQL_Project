@@ -2,10 +2,24 @@
 <html>
   <head>
     <title>Buying Page</title>
+    <style>
+      #header {
+        border-style: groove;
+        border-color: red;
+        text-align: center;
+        border-radius: 25px;
+      }
+
+      #view_cart{
+        background: rgb(66, 184, 221);
+        border-style: groove;
+        border-radius: 25px;
+      }
+    </style>
   </head>
   <body onload="getBooks()">
 
-    <h1>Welcome Below You can choose books to buy</h1>
+    <h1 id="header">Welcome Below You can choose books to buy</h1>
 
 
 
@@ -24,9 +38,9 @@
     </div>
 
 
+    <br><br>
 
-
-    <button type="button", onclick="viewCart()">View Cart</button>
+    <button id ="view_cart", type="button", onclick="viewCart()">View Cart</button>
 
     <script src="buying.js"></script>
 

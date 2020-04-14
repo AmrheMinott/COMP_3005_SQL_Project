@@ -2,21 +2,45 @@
 <html>
   <head>
     <title>Book Store-Home Page</title>
+    <style>
+      #header {
+        border-style: groove;
+        border-color: red;
+        text-align: center;
+        font-size: 50px;
+        border-radius: 25px;
+      }
+      #sign_in_button {
+        background: rgb(223, 117, 20);
+        border-style: groove;
+        border-radius: 25px;
+      }
+      #sign_up_button {
+        background: rgb(223, 117, 20);
+        border-style: groove;
+        border-radius: 25px;
+      }
+      #boss_button {
+        background: rgb(60, 78, 80);
+        border-style: groove;
+        border-radius: 25px;
+      }
+    </style>
   </head>
   <body>
 
-    <h1>Welcome to BOOK STORE</h1>
+    <h1 id="header">Welcome to BOOK STORE</h1>
 
 
     <div>
-      <button type="button", onclick="signUpButton()">SIGN UP</button>
-      <br>
-      <button type="button", onclick="signInButton()">SIGN IN</button>
-      <br>
+      <button id="sign_in_button", type="button", onclick="signUpButton()">SIGN UP</button>
+      <br><br>
+      <button id="sign_up_button", type="button", onclick="signInButton()">SIGN IN</button>
+      <br><br>
     </div>
 
 
-    <button type="button", onclick="bossButton()">BOSS ACCESS</button>
+    <button id="boss_button", type="button", onclick="bossButton()">BOSS ACCESS</button>
 
     <script src="book_store.js"></script>
 
