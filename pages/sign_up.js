@@ -17,6 +17,7 @@ async function connectToDB(){
     return false
   }
 
+  // checks if we actually got something useable from the server
   if (server_uIDs.length > 1 || server_uIDs != undefined){
     return true
   } else {
@@ -83,7 +84,6 @@ async function insertUser(){
   body.u_id = u_idTextBox.value;
   body.bill_info = bill_infoTextBox.value;
   body.ship_info = ship_infoTextBox.value;
-
 
   let result;
 
