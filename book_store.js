@@ -1,11 +1,11 @@
 
 
 function signUpButton(){
-  window.location.href = "pages/sign_up.html"
+  window.location.href = "pages/sign_up_user.html"
 }
 
 function signInButton(){
-  window.location.href = "pages/sign_in.html"
+  window.location.href = "pages/sign_in_user.html"
 }
 
 function bossButton(){
