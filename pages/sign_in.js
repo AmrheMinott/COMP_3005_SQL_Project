@@ -14,7 +14,7 @@ async function connectToDB(){
     return false
   }
 
-
+  // checks if we actually got something useable from the server
   if (server_uIDs.length > 1 || server_uIDs != undefined){
     // we good here as it checks out
     return true
