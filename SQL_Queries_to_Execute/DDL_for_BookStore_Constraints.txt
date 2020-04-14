@@ -1,4 +1,5 @@
 
+
 create table users(
 	u_id				varchar(21),
 	bill_info		varchar(21),
@@ -42,7 +43,7 @@ create table books(
 create table bookstore(
   bill_info		varchar(21),
 	ship_info		varchar(21),
-  order_num		serial,
+  order_num		varchar(55),
   isbn				varchar(8),
 	u_id				varchar(21),
 
@@ -56,7 +57,7 @@ create table bookstore(
 create table warehouse(
 	bill_info		varchar(21),
 	ship_info		varchar(21),
-	order_num		varchar(21),
+	order_num		varchar(55),
 
 	tracking_info	serial primary key
 

@@ -118,7 +118,8 @@ async function addToBookStoreCart(req , res){
 
 
     // this is where the query is built to be sent to the server to add the order by the user
-    var addToCartQuery = "insert into bookstore(bill_info, ship_info, isbn, u_id) values(";
+    var addToCartQuery = "insert into bookstore(bill_info, ship_info, order_num, isbn, u_id) values(";
+    let order_num = unique.v4();
 
 
     console.log("addToBookStoreCart: currentUser[0].bill_info " + currentUser[0].bill_info);
@@ -135,18 +136,39 @@ async function addToBookStoreCart(req , res){
       addToCartQuery = addToCartQuery.concat("',");
 
       addToCartQuery = addToCartQuery.concat("'");
+      addToCartQuery = addToCartQuery.concat(order_num);
+      addToCartQuery = addToCartQuery.concat("',");
+
+      addToCartQuery = addToCartQuery.concat("'");
       addToCartQuery = addToCartQuery.concat(isbn);
       addToCartQuery = addToCartQuery.concat("',");
 
       addToCartQuery = addToCartQuery.concat("'");
       addToCartQuery = addToCartQuery.concat(currentUser[0].u_id);
-      addToCartQuery = addToCartQuery.concat("'");
-
-
-      addToCartQuery = addToCartQuery.concat(")");
+      addToCartQuery = addToCartQuery.concat("')");
 
       // execute add query to the bookstore i.e. the cart
       await client.query(addToCartQuery);
+
+
+      // now we add the order to be tracked on postgres
+      var warehouseQuery = "insert into warehouse(bill_info, ship_info, order_num) values(";
+
+      warehouseQuery = warehouseQuery.concat("'");
+      warehouseQuery = warehouseQuery.concat(currentUser[0].bill_info);
+      warehouseQuery = warehouseQuery.concat("',");
+
+      warehouseQuery = warehouseQuery.concat("'");
+      warehouseQuery = warehouseQuery.concat(currentUser[0].ship_info);
+      warehouseQuery = warehouseQuery.concat("',");
+
+      warehouseQuery = warehouseQuery.concat("'");
+      warehouseQuery = warehouseQuery.concat(order_num);
+      warehouseQuery = warehouseQuery.concat("')");
+
+      // execute add query to the warehouse to be tracked
+      await client.query(warehouseQuery);
+
     }
 
 
