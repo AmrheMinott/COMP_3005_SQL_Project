@@ -1,5 +1,7 @@
 
 
+// here we take the values the user inputted in the textboxes and we add them to a
+// json object and send to the server
 async function addBook(){
 
   // here we add a book
