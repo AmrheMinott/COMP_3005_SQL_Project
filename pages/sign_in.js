@@ -1,6 +1,7 @@
 
 var server_uIDs = [];
 
+// this is where we connect to the database
 async function connectToDB(){
 
   try {
@@ -21,15 +22,15 @@ async function connectToDB(){
     return false
   }
 
-
 }
 
-
+// based on the u_id the user inputted we check to see if it is part of the currently existing
+// u_ids on the database
 async function checkUserIn(){
 
   var present = false
 
-  if (connectToDB()){
+  if (connectToDB() && Array.isArray(server_uIDs)){
     let u_idTextBox = document.getElementById("u_id");
 
     for (id of server_uIDs){
@@ -40,15 +41,15 @@ async function checkUserIn(){
       }
     }
 
+    // does the u_id exist on the server
     if (present == false){
       alert(" Accoriding to our servers this u_id does not exist!\n\n You are welcome to try again");
-      return;
+      return; // get out of the function
     }
 
     console.log("checkUserIn after the if statement for the POST");
 
-    await fetch("http://localhost:3000/userId",
-    {
+    await fetch("http://localhost:3000/userId", {
       method:"POST",
       headers:{
         "content-type":"application/json"
@@ -61,7 +62,7 @@ async function checkUserIn(){
     window.location.href = "/pages/buying.html"
 
   } else {
-    alert("Couldn't connect to server actually");
+    alert("Sign In Page says \"Couldn't connect to server\"");
   }
 
 }

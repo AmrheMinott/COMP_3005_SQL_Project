@@ -5,7 +5,9 @@ async function getBooks(){
 
   try {
     console.log("Connected and we got the values in the array");
-    var result  = await fetch("http://localhost:3000/getBooks" , {method:"GET"});
+    var result  = await fetch("http://localhost:3000/getBooks" , {
+      method:"GET"
+    });
     let books   = await result.json();
 
     console.log("books from server: ");
@@ -34,7 +36,6 @@ async function getBooks(){
 
   } catch (e){
     console.error("Cound not connect");
-    return false
   }
 
 }
@@ -48,8 +49,7 @@ async function addToCart(checked , isbnID){
 
   if (checked){
 
-    let result = await fetch("http://localhost:3000/addToCart",
-    {
+    let result = await fetch("http://localhost:3000/addToCart", {
       method:"POST",
       headers:{
         "content-type":"application/json"
@@ -75,6 +75,7 @@ async function viewCart(){
     let div       = document.getElementById("viewCartDiv");
     div.innerHTML = "" // we clear the innerHTML before adding anything
 
+    let theUserIdFromCart
 
     // we are adding the books the user has in the cart currently to be displayed on the screen if there was a success on the server
     if (booksInCart.success){
@@ -85,18 +86,34 @@ async function viewCart(){
         var book      = document.createElement("input");
         var bookLabel = document.createElement("label");
 
-        var innerHTML = "Order Number " + b.order_num + " ISBN " + b.isbn + " User ID " + b.u_id;
+        var innerHTML = "Order Number " + b.order_num + " ISBN " + b.isbn
         book.setAttribute("type" , "checkBox");
         book.setAttribute("id" , b.isbn);
         book.setAttribute("name" , b.u_id);
         book.setAttribute("onchange", "removeFromCart(this.checked , this.id, this.name)");
         bookLabel.innerHTML = innerHTML
 
-        div.appendChild(book);
-        div.appendChild(bookLabel);
+        div.appendChild(book)
+        div.appendChild(bookLabel)
         div.appendChild(breakLine)
+
+        theUserIdFromCart = b.u_id
       }
 
+    }
+
+    let para = document.getElementById("usersid")
+
+    // we get what time of day it is based ont he hour of the day
+    var hr = (new Date()).getHours();
+
+    // based on that hour we display an appropriate welcome to the user
+    if (hr >= 2 && hr<11){
+      para.innerHTML = "Good Morning " + theUserIdFromCart + " Your Orders are Below"
+    } else if (hr >= 11 && hr < 17){
+      para.innerHTML = "Good Afternoon " + theUserIdFromCart + " Your Orders are Below"
+    } else {
+      para.innerHTML = "Good Night " + theUserIdFromCart + " Your Orders are Below"
     }
 
   } catch(e) {
@@ -167,8 +184,6 @@ async function updateQuantityFunction(isbn){
 
 
 }
-
-
 
 
 

@@ -18,7 +18,6 @@ const client = new Client({
 })
 
 
-let server_uIDs;
 let user;
 let connected;
 
@@ -38,31 +37,25 @@ async function connectToDB(req, res){
   let result = {}
 
   try {
+
     console.log("connectToDB");
     const qResult = await client.query("select u_id from users");
-    server_uIDs = qResult.rows;
+    let server_uIDs = qResult.rows;
     console.log(server_uIDs);
 
     res.setHeader("content-type" , "application/json");
     res.status(200).send(JSON.stringify(qResult.rows));
 
-    connected = true
-    result.success = true
     console.log("We got logged in");
 
   } catch (e){
     console.error("getUIDs: Cound not connect");
-    connected = false
-    result.success = false
   }
-  /*finally {
-    res.setHeader("content-type" , "application/json");
-    res.status(200).send(JSON.stringify(result));
-  }*/
 
 }
 
 
+// this route is where we add a user to the postgresql database
 app.post("/insertUser" , insertUser);
 async function insertUser(req , res){
   let result = {}
@@ -87,6 +80,9 @@ async function insertUser(req , res){
 
     await client.query(insertUserQuery);
     result.success = true
+
+    // this has the value of the user that we just if needed to be user anywhere else to easily
+    // access ship_info and bill_info
     user = req.body
 
   } catch (e){
@@ -102,7 +98,7 @@ async function insertUser(req , res){
 
 
 
-
+// this route adds a particular book to the bookstore
 app.post("/addToCart", addToBookStoreCart);
 async function addToBookStoreCart(req , res){
 
@@ -138,17 +134,12 @@ async function addToBookStoreCart(req , res){
       addToCartQuery = addToCartQuery.concat(currentUser[0].ship_info);
       addToCartQuery = addToCartQuery.concat("',");
 
-      // addToCartQuery = addToCartQuery.concat("'");
-      // addToCartQuery = addToCartQuery.concat(order_num.substring(0,21));
-      // addToCartQuery = addToCartQuery.concat("',");
-
       addToCartQuery = addToCartQuery.concat("'");
       addToCartQuery = addToCartQuery.concat(isbn);
       addToCartQuery = addToCartQuery.concat("',");
 
       addToCartQuery = addToCartQuery.concat("'");
       addToCartQuery = addToCartQuery.concat(currentUser[0].u_id);
-      // addToCartQuery = addToCartQuery.concat(official_uid);
       addToCartQuery = addToCartQuery.concat("'");
 
 
@@ -189,7 +180,7 @@ async function addToBookStoreCart(req , res){
 app.get("/viewCart" , viewCart)
 async function viewCart(req , res){
 
-
+  // this variable holds the value of the query result and the status of the result (boolean)
   let result = {}
 
   try {
@@ -229,12 +220,11 @@ async function removeFromBookStoreCart(req , res){
   try {
 
     // make a query to remove a book from Book Store using the u_id and isbn of the specified book
-    var deleteFromCartQuery = "delete from bookstore where u_id = '" +
-    req.body.u_id + "'" + " and isbn = '" + req.body.isbn + "'"
+    var deleteFromCartQuery = "delete from bookstore where u_id = '" + req.body.u_id + "'" + " and isbn = '" + req.body.isbn + "'"
 
     await client.query(deleteFromCartQuery);
 
-    console.log("removeFromBookStoreCart POST: Query Execution was a success");
+    console.log("removeFromBookStoreCart POST: Query Execution was a SUCCESS");
 
     result.success = true
 
@@ -257,8 +247,7 @@ async function removeFromBookStoreCart(req , res){
 app.post("/updateQuantity" , updateQuantity)
 async function updateQuantity(req, res){
 
-  let loopCount = 0
-  let result
+  // this is how many time we are going to make the same
   for (var i = 0; i < req.body.count; i++){
 
     try {
@@ -267,36 +256,28 @@ async function updateQuantity(req, res){
       var updateQuantityQuery = "update books set quantity = quantity + 1 where isbn = '" + req.body.isbn + "'"
 
       console.log("updateQuantity: Inside the for loop");
-
       await client.query(updateQuantityQuery)
+      console.log("updateQuantity: Query Execution was a SUCCESS")
 
-      result = true
-
-      console.log("updateQuantity: Query Execution was a SUCCESS");
-      console.log(result);
     } catch {
-      console.log("updateQuantity: Query Execution was NOT a SUCCESS");
-      result = false
-      console.log(result);
-    } finally {
-      console.log("updateQuantity: FINALLY");
-      console.log(result);
+      console.log("updateQuantity: Query Execution was NOT a SUCCESS")
     }
 
-    loopCount ++
   }
-  console.log("loopCount " + loopCount);
 
 }
 
 
+// this gets the user id from the user and we save the official id on the server
 app.post("/userId" , theUserId);
 async function theUserId(req , res){
+
   let result = {}
   official_uid = req.body.u_id
   result.success = true
   console.log("U_ID on server-side in post function theUserId is " + official_uid);
 
+  res.setHeader("content-type" , "application/json");
   res.send(JSON.stringify(result));
   console.log(result);
 }
@@ -331,7 +312,6 @@ async function insertBook(req , res){
 
     insertBookQuery = insertBookQuery.concat("'");
     insertBookQuery = insertBookQuery.concat(req.body.pub_id);
-
     insertBookQuery = insertBookQuery.concat("',");
 
     insertBookQuery = insertBookQuery.concat("'");
@@ -387,19 +367,17 @@ async function insertBook(req , res){
 
   }
 
-
 }
 
 
 
-
-app.post("/removeBook" , removeBook);
-async function removeBook(req, res){
+// this handle removes the book based on the isbn from the postgresql
+app.post("/removeBook" , removeBookFunction);
+async function removeBookFunction(req, res){
 
   let result = {}
 
   try {
-
 
     // this query deletes from the server a book with a specific ISBN
     let deleteQuery = "delete from books where isbn = '"
@@ -427,23 +405,22 @@ async function removeBook(req, res){
 
   }
 
-
 }
 
 
 
 
-
+// this route gets all the books that are on available from the store
 app.get("/getBooks", getBooks);
 async function getBooks(req, res){
 
   try {
 
     // connecting to server to execute query
-    let getBooksResult = await client.query("select * from books");
+    let getBooksResult = await client.query("select * from books where quantity > 0");
     let books = getBooksResult.rows;
 
-    console.log("getBooks GET: We have gotten the books")
+    console.log("getBooks GET: We have gotten the books above 0")
     console.log(books);
 
     res.setHeader("content-type" , "application/json");
@@ -502,20 +479,7 @@ async function genrePerSales(req, res){
 
 
 
-
-
-
-
-
-
-
-
-
 app.listen(3000 , () => console.log("Server is listening on port 3000 of localhost"))
-
-
-
-
 
 
 // end of program

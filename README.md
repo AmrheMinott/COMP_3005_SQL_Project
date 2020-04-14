@@ -15,6 +15,10 @@ This project makes use of the following programming languages
   Javascript
   HTML
 
+The database used is Postgres and queries are made on the server file to be executed on the database
+
+
+
 
 
 How to Run Project in Four (4) Steps
@@ -68,7 +72,7 @@ Main Directory
       DDL_for_BookStore_Constriants.txt - this text file has all the need code to create the tables needed to create database on the pg4Admin
 
       template_Insertions_Values - this test file has template values that can be inserted to the pg4Admin/sql server for testing  
-       
+
 
 
 

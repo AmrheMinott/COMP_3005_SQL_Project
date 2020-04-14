@@ -38,6 +38,8 @@ async function addBook(){
       body:JSON.stringify(body)
     })
 
+    success = await success.json()
+
     console.log("Success of books addition was a " + success.success);
 
     if (success.success){
@@ -50,7 +52,6 @@ async function addBook(){
     console.log("ISSUE catch e" + e);
   }
 
-
 }
 
 
@@ -62,8 +63,7 @@ async function removeBookByISBN(){
   let isbn = document.getElementById("isbnRemove").value;
 
   // make the request to the server
-  await fetch ("http://localhost:3000/removeBook",
-  {
+  let response = await fetch ("http://localhost:3000/removeBook", {
     method:"POST",
     headers:{
       "content-type":"application/json"
@@ -73,11 +73,19 @@ async function removeBookByISBN(){
     })
   })
 
+  response = await success.json()
+
+  if (response.success){
+    alert("Book was removed nicely")
+  } else {
+    alert("There appears to be an issue")
+  }
+
 }
 
 
 
-
+// we get the div for the authors' reports
 let authorsDiv = document.getElementById("authorPerSalesDiv")
 
 // makes a request to the running server for the sales per author
@@ -112,7 +120,7 @@ async function getAuthorReport(){
 }
 
 
-
+// we get the div for the genre's reports
 let genreDiv = document.getElementById("genrePerSalesDiv")
 
 // makes a request to the running server for the sales per genre
