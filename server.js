@@ -218,7 +218,6 @@ async function viewCart(req , res){
     result.result = query.rows
     console.log("viewCart POST: Query Execution was a success");
 
-
   } catch (e){
 
     result.success = false
