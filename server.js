@@ -126,6 +126,7 @@ async function addToBookStoreCart(req , res){
 
     // this if statement using determines if the user actually has a file for us to add their bill_info and ship_info to the query
     if (currentUser[0].bill_info != undefined){
+
       // here we are building the SQL query by taking the values from the body of the POST request
       addToCartQuery = addToCartQuery.concat("'");
       addToCartQuery = addToCartQuery.concat(currentUser[0].bill_info);
