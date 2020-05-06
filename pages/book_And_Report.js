@@ -64,7 +64,7 @@ async function removeBookByISBN(){
   // we are getting the ibsn from the input
   let isbn = document.getElementById("isbnRemove").value;
 
-  // make the request to the server
+  // make the POST request to the server
   let response = await fetch ("http://localhost:3000/removeBook", {
     method:"POST",
     headers:{
@@ -97,7 +97,7 @@ async function getAuthorReport(){
 
     authorsDiv.innerHTML = "" // set innerHTML to null when function is called
 
-    // gets the result from the server
+    // GET request to the server and we gether the result
     var result = await fetch("http://localhost:3000/authorPerSalesRoute" , {method:"GET"});
     let report = await result.json(); // parses result from server
 
@@ -120,6 +120,7 @@ async function getAuthorReport(){
   }
 
 }
+
 
 
 // we get the div for the genre's reports
@@ -156,14 +157,6 @@ async function getGenreReport(){
   }
 
 }
-
-
-
-
-
-
-
-
 
 
 

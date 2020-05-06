@@ -53,15 +53,17 @@ async function doesSignUpValuesMeetRequirements(){
     }
 
     if (ship_infoTextBox.value.length == 0 || bill_infoTextBox.value.length == 0 || u_idTextBox.value.length == 0){
-      alert("We Do not accept empty spaces");
+      alert("We Do Not Accept Any Empty Spaces");
       return
     }
 
     // filters the inputs of the user to see if they meet the required length
-    if (ship_infoTextBox.value.length > CHARACTERAMT || bill_infoTextBox.value.length > CHARACTERAMT){
-      alert("Please check Shipping Information and Billing Inforamtion as one of them have not met the needed Number of Charcters \n\n ");
+    if (ship_infoTextBox.value.length > CHARACTERAMT){
+      alert("Please check Shipping Information has EXCEED the 21 Characters mark\n\n ");
+    } else if (bill_infoTextBox.value.length > CHARACTERAMT){
+      alert("Please check Billing Inforamtion has EXCEED the 21 Characters mark\n\n ");
     } else if (u_idTextBox.value.length > CHARACTERAMT){
-      alert("User Id has not met the number of characters needed!");
+      alert("User Id has EXCEED the 21 Characters mark!");
     } else {
 
       if (insertUser()){
@@ -112,7 +114,6 @@ async function insertUser(){
     //return the false value here
     return result.success
   }
-
 
 }
 

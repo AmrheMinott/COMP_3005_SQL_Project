@@ -503,5 +503,4 @@ async function genrePerSales(req, res){
 
 app.listen(3000 , () => console.log("Server is listening on port 3000 of localhost"))
 
-
 // end of program

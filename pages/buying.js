@@ -27,6 +27,7 @@ async function getBooks(){
       book.setAttribute("id" , b.isbn);
       book.setAttribute("onchange", "addToCart(this.checked , this.id)");
       bookLabel.innerHTML = innerHTML
+      bookLabel.setAttribute("id" , b.isbn + "label")
 
       isbn = b.isbn
       div.appendChild(book);
@@ -47,8 +48,12 @@ async function addToCart(checked , isbnID){
 
   console.log("addToCart: checked = " + checked + " and isbn = " + isbnID);
 
+  var label = document.getElementById(isbnID+"label")
   if (checked){
 
+    label.style.backgroundColor = "#00FF00";
+
+    // we make the POST request to server
     let result = await fetch("http://localhost:3000/addToCart", {
       method:"POST",
       headers:{
@@ -59,9 +64,12 @@ async function addToCart(checked , isbnID){
       })
     })
 
+  } else {
+    label.style.backgroundColor = "";
   }
 
 }
+
 
 
 // this function makes me see the information on the bookstore
@@ -147,6 +155,7 @@ async function removeFromCart(checked , isbn, u_id){
 
   if (checked){
 
+    // we make the POST request to server
     let result = await fetch("http://localhost:3000/removeFromCart",
     {
       method:"POST",
@@ -164,6 +173,7 @@ async function removeFromCart(checked , isbn, u_id){
   }
 
 }
+
 
 
 // this function updates quantity of book on the server

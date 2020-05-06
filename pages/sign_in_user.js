@@ -24,6 +24,8 @@ async function connectToDB(){
 
 }
 
+
+
 // based on the u_id the user inputted we check to see if it is part of the currently existing
 // u_ids on the database
 async function checkUserIn(){
@@ -49,6 +51,7 @@ async function checkUserIn(){
 
     console.log("checkUserIn after the if statement for the POST");
 
+    // we make the POST request to server
     await fetch("http://localhost:3000/userId", {
       method:"POST",
       headers:{
@@ -66,20 +69,6 @@ async function checkUserIn(){
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
