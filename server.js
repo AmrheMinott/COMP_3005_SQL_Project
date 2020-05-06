@@ -180,7 +180,6 @@ async function addToBookStoreCart(req , res){
     await client.query(updateQuantityQuery)
 
     result.success = true
-
     console.log("addToBookStore POST: Query Execution was a success");
 
   } catch (e){
