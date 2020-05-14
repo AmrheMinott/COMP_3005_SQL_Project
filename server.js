@@ -20,7 +20,6 @@ const client = new Client({
 
 let user;
 let connected;
-
 let official_uid;
 
 
@@ -49,7 +48,7 @@ async function connectToDB(req, res){
     console.log("We got logged in");
 
   } catch (e){
-    console.error("getUIDs: Cound not connect");
+    console.error("getUIDs: Cound not connect " + e);
   }
 
 }

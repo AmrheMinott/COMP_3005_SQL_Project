@@ -4,26 +4,44 @@
     <title>Book Store-Home Page</title>
     <style>
       #header {
-        border-style: groove;
         border-color: red;
-        text-align: center;
-        font-size: 50px;
         border-radius: 25px;
+        border-style: groove;
+        font-size: 50px;
+        text-align: center;
       }
       #sign_in_button {
         background: rgb(223, 117, 20);
-        border-style: groove;
         border-radius: 25px;
+        border-style: groove;
+        padding: 10px;
+        text-align: center;
       }
       #sign_up_button {
         background: rgb(223, 117, 20);
-        border-style: groove;
         border-radius: 25px;
+        border-style: groove;
+        padding: 10px;
+        text-align: center;
       }
       #boss_button {
         background: rgb(60, 78, 80);
-        border-style: groove;
         border-radius: 25px;
+        border-style: groove;
+        padding: 10px;
+        text-align: center;
+      }
+      #div_holder {
+        height: 200px;
+        position: relative;
+      }
+      #buttons_holder {
+        left: 50%;
+        margin: 0;
+        -ms-transform: translate(-50%, -50%);
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
       }
     </style>
   </head>
@@ -32,15 +50,18 @@
     <h1 id="header">Welcome to BOOK STORE</h1>
 
 
-    <div>
-      <button id="sign_in_button", type="button", onclick="signUpButton()">SIGN UP</button>
-      <br><br>
-      <button id="sign_up_button", type="button", onclick="signInButton()">SIGN IN</button>
-      <br><br>
+    <div id="div_holder">
+
+      <div id="buttons_holder">
+        <button id="sign_in_button", type="button", onclick="signUpButton()">SIGN UP</button>
+        <br><br>
+        <button id="sign_up_button", type="button", onclick="signInButton()">SIGN IN</button>
+        <br><br>
+        <button id="boss_button", type="button", onclick="bossButton()">BOSS ACCESS</button>
+      </div>
+
     </div>
 
-
-    <button id="boss_button", type="button", onclick="bossButton()">BOSS ACCESS</button>
 
     <script src="book_store.js"></script>
 
