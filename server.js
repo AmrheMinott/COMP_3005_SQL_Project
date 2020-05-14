@@ -76,6 +76,7 @@ async function insertUser(req , res){
     insertUserQuery = insertUserQuery.concat("'");
 
     insertUserQuery = insertUserQuery.concat(")");
+    official_uid = req.body.u_id // after user has signed up we hold the value of their u_id for the server purposes
 
     await client.query(insertUserQuery);
     result.success = true
@@ -241,7 +242,6 @@ async function removeFromBookStoreCart(req , res){
 
     // make a query to remove a book from Book Store using the u_id and isbn of the specified book
     var deleteFromCartQuery = "delete from bookstore where u_id = '" + req.body.u_id + "'" + " and isbn = '" + req.body.isbn + "'"
-
     await client.query(deleteFromCartQuery);
 
     console.log("removeFromBookStoreCart POST: Query Execution was a SUCCESS");
@@ -406,7 +406,6 @@ async function removeBookFunction(req, res){
 
     // excutes the query
     await client.query(deleteQuery);
-
     result.success = true
 
     console.log("removeBook: removing book was a success");
