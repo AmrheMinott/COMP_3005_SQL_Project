@@ -18,9 +18,9 @@ const client = new Client({
 })
 
 
-let user;
-let connected;
-let official_uid;
+let user; // this contains all the data pretaining to the user that has logged in
+let connected; // boolean to see if the user is logged in or not
+let official_uid; // this is the id the user used to get access to the server
 
 
 // this is where we go an connect to the postgresql server
