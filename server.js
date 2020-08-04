@@ -477,7 +477,7 @@ async function authorPerSales(req, res){
 
 // this function handles a route where we query the postgres db for the
 // report of the genre and the sales the genre have made
-app.get("/genrePerSalesRoute" , authorPerSales);
+app.get("/genrePerSalesRoute" , genrePerSales);
 async function genrePerSales(req, res){
 
   try {
